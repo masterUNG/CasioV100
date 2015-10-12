@@ -428,8 +428,8 @@ public class DatabaseBackupService extends IntentService {
 
                     switch (Integer.parseInt(strITEMTYPE)) {
                         case 0:
-                            forPrintLabel(myCONSECNUMBER, itemName, strCount);
-                            //forPrintByEPSON(myCONSECNUMBER, itemName, "1", myUnitPrice, strCount);
+                            forPrintLabel(myCONSECNUMBER, ITEMNAMEStrings, arrayITEMTYPE, strCount);
+
                             break;
                         case 1:
                             forPrintByEPSON_ITEMTYPE1(myCONSECNUMBER, itemName, "1", myUnitPrice, strCount);
@@ -460,7 +460,7 @@ public class DatabaseBackupService extends IntentService {
 
     }    // Method copySalseWork
 
-    private void forPrintLabel(String myCONSECNUMBER, String itemName, String strCount) {
+    private void forPrintLabel(String myCONSECNUMBER, String[] itemName, int[] intITEMTYPe, String strCount) {
 
         //Connected Printer Pass COM2
         Log.i("Master", "print epson 666");
