@@ -242,7 +242,12 @@ public class DatabaseBackupService extends IntentService {
             String strSALESTTLAMT = cursor.getString(intSALESTTLAMT);
             Log.d(myTAG, "SALESTTLAMT (จำนวนเงินทั้งหมดในบิล) ==> " + strSALESTTLAMT);
 
+            intCount = Integer.parseInt(mySALESTTLQTY);
+
             cursor.moveToNext();
+
+
+
 
         }   //for
 
@@ -284,12 +289,13 @@ public class DatabaseBackupService extends IntentService {
             data.write(0x0a);
 
             //Print itemName
-            char[] charItemName = ("Name = " + strItemName).toCharArray();
+            char[] charItemName = ("itemName = " + strItemName).toCharArray();
             for (int i = 0; i < charItemName.length; i++) {
                 data.write(charItemName[i]);
             }
             data.write(0x0d);
             data.write(0x0a);
+
 
             //Print QTY
             char[] charQTY = ("QTY = " + strQTY).toCharArray();
@@ -408,7 +414,20 @@ public class DatabaseBackupService extends IntentService {
 
 
                     String strCount = Integer.toString(intStartCount += 1) + "/" + Integer.toString(intCount);
-                    forPrintByEPSON(myCONSECNUMBER, itemName, "1", myUnitPrice, strCount);
+
+                    switch (Integer.parseInt(strITEMTYPE)) {
+                        case 0:
+                            forPrintByEPSON(myCONSECNUMBER, itemName, "1", myUnitPrice, strCount);
+                            break;
+                        case 1:
+                            forPrintByEPSON_ITEMTYPE1(myCONSECNUMBER, itemName, "1", myUnitPrice, strCount);
+                            break;
+                        case 2:
+                            forPrintByEPSON_ITEMTYPE2(myCONSECNUMBER, itemName, "1", myUnitPrice, strCount);
+                            break;
+                        default:
+                            break;
+                    } // switch
 
                     intTime += 1;
                 }   // while
@@ -428,6 +447,14 @@ public class DatabaseBackupService extends IntentService {
 
 
     }    // Method copySalseWork
+
+    private void forPrintByEPSON_ITEMTYPE2(String myCONSECNUMBER, String itemName, String strQTY, String myUnitPrice, String strCount) {
+
+    }
+
+    private void forPrintByEPSON_ITEMTYPE1(String myCONSECNUMBER, String itemName, String strQTY, String myUnitPrice, String strCount) {
+
+    }
 
 
     boolean isPrintKPNo2(String strPrinted) {
