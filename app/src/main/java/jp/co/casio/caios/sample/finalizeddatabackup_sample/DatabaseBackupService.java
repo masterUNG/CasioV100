@@ -13,11 +13,11 @@ import jp.co.casio.caios.framework.device.SerialCom;
 public class DatabaseBackupService extends IntentService {
 
     //My Explicit
-    String myCONSECNUMBER, itemName, myQTY, myUnitPrice;
-    int intCount, intStartCount = 0;
-
+    private  String myCONSECNUMBER, itemName, myQTY, myUnitPrice;
+    private int intCount, intStartCount = 0;
 
     private static String TAG = "DatabaseBackupService";
+    private static String myTAG = "Master";
     // Database provider.
     private final static String PROVIDER = "jp.co.casio.caios.framework.database";
 
@@ -183,13 +183,14 @@ public class DatabaseBackupService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-
+        //consecNumber คือ เลขกำกับของบิล
         String consecNumber = intent.getStringExtra(BroadcastReceiver.EXTRA_CONSECNUMBER);
         String selection = String.format("CONSECNUMBER='%s'", consecNumber);
 
+        // ให้ไปทำงานที่ copySALESWORKcst004
         copySALESWORKcst004("CST004", selection, null, SQLCMD_CREATE_TMP_CST004);
 
-        copySALESWORK("CST005", selection, "LINENUMBER ASC", SQLCMD_CREATE_TMP_CST005);
+        copySALESWORKcst005("CST005", selection, "LINENUMBER ASC", SQLCMD_CREATE_TMP_CST005);
 
 
         //forPrintByEPSON("Test by Master");
@@ -211,31 +212,41 @@ public class DatabaseBackupService extends IntentService {
             cursor = getContentResolver().query(uri, null, selection, null, sortOrder);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }   // try
+
+
         if (cursor == null) {
             return false;
-        }
+        }   // if
 
+        //Counting จำนวนทั้งของ Record
         int count = cursor.getCount();
-        cursor.moveToFirst();
-        for (int i = 0; i < count; i++) {
-            Log.d("Master", String.format("Count = %d", count));
+        Log.d(myTAG, "Count ที่อ่านได้ = " + Integer.toString(count));
 
-            //ค่า SALESTTLQTY
+
+        cursor.moveToFirst();
+
+        //Loop ตาม Count แต่ทำแค่ รอบเดียว
+        for (int i = 0; i < count; i++) {
+
+            Log.d(myTAG, "รอบที่ = " + Integer.toString(i));
+
+
+            //ค่า SALESTTLQTY คือ ค่าที่บอก ใน 1 บิลขายกี่ชิ้น
             int offset = cursor.getColumnIndex("SALESTTLQTY");
             String mySALESTTLQTY = cursor.getString(offset);
+            Log.d(myTAG, "mySALESTTLQTY (จำนวนชิ้นที่ขาย)==> " + mySALESTTLQTY);
 
-            //Show Log
-            Log.i("Master", "mySALESTTLQTY ==> " + mySALESTTLQTY);
-            intCount = Integer.parseInt(mySALESTTLQTY);
+            //ลองทดสอบ ดึ่งค่า SALESTTLAMT
+            int intSALESTTLAMT = cursor.getColumnIndex("SALESTTLAMT");
+            String strSALESTTLAMT = cursor.getString(intSALESTTLAMT);
+            Log.d(myTAG, "SALESTTLAMT (จำนวนเงินทั้งหมดในบิล) ==> " + strSALESTTLAMT);
 
             cursor.moveToNext();
-            //isPrintKPNo2(myCONSECNUMBER);
 
         }   //for
 
         cursor.close();
-
 
         return true;
 
@@ -330,7 +341,7 @@ public class DatabaseBackupService extends IntentService {
     }   // forPrintByEPSON
 
 
-    private boolean copySALESWORK(String tableName, String selection, String sortOrder, String createSQL) {
+    private boolean copySALESWORKcst005(String tableName, String selection, String sortOrder, String createSQL) {
 
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("content");
@@ -344,39 +355,49 @@ public class DatabaseBackupService extends IntentService {
             cursor = getContentResolver().query(uri, null, selection, null, sortOrder);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }   // try
         if (cursor == null) {
             return false;
-        }
+        }   // if
 
+        //เร่ิมนับ
         int count = cursor.getCount();
-        cursor.moveToFirst();
-        for (int i = 0; i < count - 2; i++) {
-            Log.d("Master", String.format("Count = %d", count));
+        Log.w(myTAG, "Count ที่ได้จาก CST005 ==> " + Integer.toString(count));
 
-            //ค่า CONSECNUMBER
-            int offset = cursor.getColumnIndex("CONSECNUMBER");
-            myCONSECNUMBER = cursor.getString(offset);
+        cursor.moveToFirst();
+
+
+        for (int i = 0; i < count - 2; i++) {
+
+            //ค่า CONSECNUMBER หมายเลขบิล
+            int intCONSECNUMBER = cursor.getColumnIndex("CONSECNUMBER");
+            myCONSECNUMBER = cursor.getString(intCONSECNUMBER);
             String masterCons = myCONSECNUMBER;
 
-            //ได้ค่าของ itemName
-            offset = cursor.getColumnIndex("ITEMNAME");
-            itemName = cursor.getString(offset);
+            //ได้ค่าของ itemName ชื่อสินค้า
+            int intITEMNAME = cursor.getColumnIndex("ITEMNAME");
+            itemName = cursor.getString(intITEMNAME);
 
-            //ได้ค่าของ QTY
-            offset = cursor.getColumnIndex("QTY");
-            myQTY = cursor.getString(offset);
+            //ได้ค่าของ QTY จำนวนที่สั่ง
+            int intQTY = cursor.getColumnIndex("QTY");
+            myQTY = cursor.getString(intQTY);
 
-            //ได้ค่าของ UnitPrice
-            offset = cursor.getColumnIndex("UNITPRICE");
-            myUnitPrice = cursor.getString(offset);
+            //ได้ค่าของ UnitPrice ราคาสินค้า
+            int intUNITPRICE = cursor.getColumnIndex("UNITPRICE");
+            myUnitPrice = cursor.getString(intUNITPRICE);
+
+            //ทดสอบดึ่งค่า ITEMTYPE ประเภทของตัวสินค้า
+            int intITEMTYPE = cursor.getColumnIndex("ITEMTYPE");
+            String strITEMTYPE = cursor.getString(intITEMTYPE);
 
 
             //Show Log
-            Log.d("Master", "myCONSECNUMBER ==> " + myCONSECNUMBER);
-            Log.d("Master", "ItemName = " + itemName);
-            Log.d("Master", "QTY ==> " + myQTY);
-            Log.d("Master", "UnitPrice ==> " + myUnitPrice);
+            Log.w(myTAG, "รอบที่ ==> " + Integer.toString(i+1));
+            Log.w(myTAG, "myCONSECNUMBER ==> " + myCONSECNUMBER);
+            Log.w(myTAG, "ItemName = " + itemName);
+            Log.w(myTAG, "QTY ==> " + myQTY);
+            Log.w(myTAG, "UnitPrice ==> " + myUnitPrice);
+            Log.w(myTAG, "ITEMTYPE ==> " + strITEMTYPE);
 
             
 
