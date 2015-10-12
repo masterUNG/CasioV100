@@ -405,9 +405,11 @@ public class DatabaseBackupService extends IntentService {
             Log.w(myTAG, "UnitPrice ==> " + myUnitPrice);
             Log.w(myTAG, "ITEMTYPE ==> " + strITEMTYPE);
 
+            int intITEMTYPIfinal = Integer.parseInt(strITEMTYPE);
+
             
 
-            // forPrintByEPSON();
+            //การส่งไป พิมพ์ ที่ Epson
 
                 int intTime = 0;
                 while (intTime < Integer.parseInt(myQTY)) {
