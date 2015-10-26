@@ -13,7 +13,7 @@ import jp.co.casio.caios.framework.device.SerialCom;
 public class DatabaseBackupService extends IntentService {
 
     //My Explicit
-    private  String myCONSECNUMBER, itemName, myQTY, myUnitPrice;
+    private String myCONSECNUMBER, itemName, myQTY, myUnitPrice, strITEMTYPE;
     private int intCount, intStartCount = 0;
     private int[] arrayITEMTYPE;
     private String[] ITEMNAMEStrings;
@@ -252,8 +252,6 @@ public class DatabaseBackupService extends IntentService {
             cursor.moveToNext();
 
 
-
-
         }   //for
 
         cursor.close();
@@ -399,9 +397,7 @@ public class DatabaseBackupService extends IntentService {
 
             strItemName[i] = itemName;
 
-          //  Log.w("25oct15", "ItemName(" + Integer.toString(i) + ") ==> " + strItemName[i]);
-
-
+            //  Log.w("25oct15", "ItemName(" + Integer.toString(i) + ") ==> " + strItemName[i]);
 
 
             //ได้ค่าของ QTY จำนวนที่สั่ง
@@ -414,24 +410,14 @@ public class DatabaseBackupService extends IntentService {
 
             //ทดสอบดึ่งค่า ITEMTYPE ประเภทของตัวสินค้า
             int intITEMTYPE = cursor.getColumnIndex("ITEMTYPE");
-            String strITEMTYPE = cursor.getString(intITEMTYPE);
+            strITEMTYPE = cursor.getString(intITEMTYPE);
             arrayITEMTYPE[i] = Integer.parseInt(strITEMTYPE);
 
             //arrayITEMTYPE[i] = intITEMTYPE;
 
 
-
-
-
-
-
-
-
-
-
-
             //Show Log
-            Log.w(myTAG, "รอบที่ ==> " + Integer.toString(i+1));
+            Log.w(myTAG, "รอบที่ ==> " + Integer.toString(i + 1));
             Log.w(myTAG, "myCONSECNUMBER ==> " + myCONSECNUMBER);
             Log.w(myTAG, "ItemName = " + itemName);
             Log.w(myTAG, "QTY ==> " + myQTY);
@@ -440,36 +426,6 @@ public class DatabaseBackupService extends IntentService {
 
 
             int intITEMTYPIfinal = Integer.parseInt(strITEMTYPE);
-
-            
-
-            //การส่งไป พิมพ์ ที่ Epson
-
-                int intTime = 0;
-                while (intTime < Integer.parseInt(myQTY)) {
-
-
-                    String strCount = Integer.toString(intStartCount += 1) + "/" + Integer.toString(intCount);
-
-                    switch (Integer.parseInt(strITEMTYPE)) {
-                        case 0:
-                            forPrintLabel(myCONSECNUMBER, ITEMNAMEStrings, arrayITEMTYPE, strCount);
-
-                            break;
-                        case 1:
-                            forPrintByEPSON_ITEMTYPE1(myCONSECNUMBER, itemName, "1", myUnitPrice, strCount);
-                            break;
-                        case 2:
-                            forPrintByEPSON_ITEMTYPE2(myCONSECNUMBER, itemName, "1", myUnitPrice, strCount);
-                            break;
-                        default:
-                            break;
-                    } // switch
-
-                    intTime += 1;
-                }   // while
-
-
 
 
             cursor.moveToNext();
@@ -482,6 +438,7 @@ public class DatabaseBackupService extends IntentService {
         String myTAG2 = "25oct15";
         Log.w(myTAG2, "จำนวน Record ที่ได้จาก CST005 ==> " + Integer.toString(count));
         Log.w(myTAG2, "รอบที่ จะ loop ==> " + Integer.toString(count - 2));
+        Log.w(myTAG2, "myQTY ที่เราได้มีค่า = " + myQTY);
 
         for (int i = 0; i < count - 2; i++) {
             Log.w(myTAG2, "ItemName(" + Integer.toString(i) + ") ==> " + strItemName[i]);
@@ -489,6 +446,33 @@ public class DatabaseBackupService extends IntentService {
 
         }   // for
 
+
+        //การส่งไป พิมพ์ ที่ Epson
+
+        int intTime = 0;
+
+        // myQTY คือค่าของจำนวนสำค้า
+
+        while (intTime < Integer.parseInt(myQTY)) {
+
+
+            String strCount = Integer.toString(intStartCount += 1) + "/" + Integer.toString(intCount);
+
+            switch (Integer.parseInt(strITEMTYPE)) {
+                case 0:
+                    forPrintLabel(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
+
+                    break;
+
+                default:
+
+                    forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
+
+                    break;
+            } // switch
+
+            intTime += 1;
+        }   // while
 
 
         cursor.close();
@@ -499,15 +483,13 @@ public class DatabaseBackupService extends IntentService {
 
     }    // Method copySalseWork
 
-    private void forPrintLabel(String myCONSECNUMBER, String[] itemName, int[] intITEMTYPe, String strCount) {
+    private void forPrintLabelCondiment(String myCONSECNUMBER, String[] itemNameStrings, int intLoop, int[] arrayITEMTYPE) {
 
-        //Connected Printer Pass COM2
-        Log.i("Master", "print epson 666");
-        Log.i("Master", "com open");
+
+        //เปิด Port ที่ใช้สำหรับ เชื่อต่อ Printer Epson
         SerialCom com = new SerialCom();
         int ret = com.open(SerialCom.SERIAL_TYPE_COM2, 1, "localhost");
-        if (ret == 0) { //success connect
-            Log.i("Master", "success");
+        if (ret == 0) {     // เชื่อมต่อสำเร็จ
 
             com.connectCom(SerialCom.SERIAL_BOUDRATE_19200,
                     SerialCom.SERIAL_BITLEN_8,
@@ -515,39 +497,151 @@ public class DatabaseBackupService extends IntentService {
                     SerialCom.SERIAL_STOP_1,
                     SerialCom.SERIAL_FLOW_NON);
 
+
             byte ESC = 0x1B;
             ByteArrayOutputStream data = new ByteArrayOutputStream();
 
-            //Print myCONSECNUMBER
-            char[] charConsecNumber = ("ConsencNumber = " + myCONSECNUMBER).toCharArray();
-            for (int i = 0; i < charConsecNumber.length; i++) {
-                data.write(charConsecNumber[i]);
-            }   //for
-            data.write(0x0d);
-            data.write(0x0a);
 
-            //Print itemName
-            char[] charItemName = ("itemName = " + itemName).toCharArray();
-            for (int i = 0; i < charItemName.length; i++) {
-                data.write(charItemName[i]);
-            }
-            data.write(0x0d);
-            data.write(0x0a);
+            //Print Label
+            for (int k = 0; k < intLoop; k++) {
 
-            //Print Count
-            char[] charCount = strCount.toCharArray();
-            for (int i = 0; i < charCount.length; i++) {
-                data.write(charCount[i]);
+                //Print myCONSECNUMBER
+                char[] charConsecNumber = ("ConsencNumber = " + myCONSECNUMBER).toCharArray();
+                for (int y = 0; y < charConsecNumber.length; y++) {
+                    data.write(charConsecNumber[y]);
+                }   //for
+                data.write(0x0d);
+                data.write(0x0a);
+
+
+                //Print itemName
+                char[] charItemName = ("itemName = " + itemNameStrings[k]).toCharArray();
+                for (int i = 0; i < charItemName.length; i++) {
+                    data.write(charItemName[i]);
+                }
+                data.write(0x0d);
+                data.write(0x0a);
+
+
+                //Print Condiment
+                int intCondiment;
+                try {
+
+                    intCondiment = arrayITEMTYPE[k + 1];
+                    if (intCondiment != 0) {
+
+                        char[] charCondiment = ("Condiment ==> " + itemNameStrings[k + 1]).toCharArray();
+                        for (int i = 0; i < charCondiment.length; i++) {
+                            data.write(charCondiment[i]);
+                        }
+
+                        k += 1;
+
+                    }   // if
+                    data.write(0x0d);
+                    data.write(0x0a);
+
+                } catch (Exception e) {
+
+                } //try
+
+
+
+                //Print Count
+                char[] charCount = (Integer.toString(k + 1) + "/" + Integer.toString(intLoop)).toCharArray();
+                for (int i = 0; i < charCount.length; i++) {
+                    data.write(charCount[i]);
+                }
+                data.write(0x0d);
+                data.write(0x0a);
+
+
+
+                //การจบแต่ละบิล
+                data.write(0x1b);   //ESC
+                data.write(0x64);   //Feed ling
+                data.write(5);      //กำหนดการเว้นบรรทัด
+                // ควรจบด้วยแบบนี่
+
+
             }   // for
-            data.write(0x0d);
-            data.write(0x0a);
+
+            //ของเดิม
+            byte[] out = data.toByteArray();
+            com.writeData(out, out.length);
 
 
-            data.write(0x1b);   //ESC
-            data.write(0x64);   //Feed ling
-            data.write(5);
-            // ควรจบด้วยแบบนี่
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
+            com.close();
+        } else
+            Log.i("print connect", "fail");
+
+
+    }   // forPrintLabelCondiment
+
+    private void forPrintLabel(String myCONSECNUMBER, String[] itemNameString, int intLoop, int[] arrayITEMTYPE) {
+
+        //เปิด Port ที่ใช้สำหรับ เชื่อต่อ Printer Epson
+        SerialCom com = new SerialCom();
+        int ret = com.open(SerialCom.SERIAL_TYPE_COM2, 1, "localhost");
+        if (ret == 0) {     // เชื่อมต่อสำเร็จ
+
+            com.connectCom(SerialCom.SERIAL_BOUDRATE_19200,
+                    SerialCom.SERIAL_BITLEN_8,
+                    SerialCom.SERIAL_PARITY_NON,
+                    SerialCom.SERIAL_STOP_1,
+                    SerialCom.SERIAL_FLOW_NON);
+
+
+            byte ESC = 0x1B;
+            ByteArrayOutputStream data = new ByteArrayOutputStream();
+
+
+            //Print Label
+            for (int k = 0; k < intLoop; k++) {
+
+                //Print myCONSECNUMBER
+                char[] charConsecNumber = ("ConsencNumber = " + myCONSECNUMBER).toCharArray();
+                for (int y = 0; y < charConsecNumber.length; y++) {
+                    data.write(charConsecNumber[y]);
+                }   //for
+                data.write(0x0d);
+                data.write(0x0a);
+
+
+                //Print itemName
+                char[] charItemName = ("itemName = " + itemNameString[k]).toCharArray();
+                for (int i = 0; i < charItemName.length; i++) {
+                    data.write(charItemName[i]);
+                }
+                data.write(0x0d);
+                data.write(0x0a);
+
+
+                //Print Count
+                char[] charCount = (Integer.toString(k + 1) + "/" + Integer.toString(intLoop)).toCharArray();
+                for (int i = 0; i < charCount.length; i++) {
+                    data.write(charCount[i]);
+                }
+                data.write(0x0d);
+                data.write(0x0a);
+
+
+
+               //การจบแต่ละบิล
+                data.write(0x1b);   //ESC
+                data.write(0x64);   //Feed ling
+                data.write(5);      //กำหนดการเว้นบรรทัด
+                // ควรจบด้วยแบบนี่
+
+
+            }   // for
 
             //ของเดิม
             byte[] out = data.toByteArray();
@@ -566,6 +660,13 @@ public class DatabaseBackupService extends IntentService {
             Log.i("print connect", "fail");
 
     }   // forPrintLabel
+
+
+    private void forPrintLabelByEPSON(String myCONSECNUMBER, String itemName, String strQTY, String myUnitPrice, String strCount) {
+
+
+    }   // forPrintLabelByEPSON
+
 
     private void forPrintByEPSON_ITEMTYPE2(String myCONSECNUMBER, String itemName, String strQTY, String myUnitPrice, String strCount) {
 
