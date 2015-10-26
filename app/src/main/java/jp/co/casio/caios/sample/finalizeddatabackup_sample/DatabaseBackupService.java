@@ -30,6 +30,7 @@ public class DatabaseBackupService extends IntentService {
 
 
     private String[] strItemName;
+    private ByteArrayOutputStream data;
 
 
     private static final String SQLCMD_CREATE_TMP_CST004 =
@@ -499,7 +500,7 @@ public class DatabaseBackupService extends IntentService {
 
 
             byte ESC = 0x1B;
-            ByteArrayOutputStream data = new ByteArrayOutputStream();
+            data = new ByteArrayOutputStream();
 
 
             //Print Label
@@ -510,8 +511,7 @@ public class DatabaseBackupService extends IntentService {
                 for (int y = 0; y < charConsecNumber.length; y++) {
                     data.write(charConsecNumber[y]);
                 }   //for
-                data.write(0x0d);
-                data.write(0x0a);
+                spaceLine();
 
 
                 //Print itemName
@@ -519,8 +519,7 @@ public class DatabaseBackupService extends IntentService {
                 for (int i = 0; i < charItemName.length; i++) {
                     data.write(charItemName[i]);
                 }
-                data.write(0x0d);
-                data.write(0x0a);
+                spaceLine();
 
 
                 //Print Condiment
@@ -538,8 +537,7 @@ public class DatabaseBackupService extends IntentService {
                         k += 1;
 
                     }   // if
-                    data.write(0x0d);
-                    data.write(0x0a);
+                    spaceLine();
 
                 } catch (Exception e) {
 
@@ -552,15 +550,14 @@ public class DatabaseBackupService extends IntentService {
                 for (int i = 0; i < charCount.length; i++) {
                     data.write(charCount[i]);
                 }
-                data.write(0x0d);
-                data.write(0x0a);
+                spaceLine();
 
 
 
                 //การจบแต่ละบิล
                 data.write(0x1b);   //ESC
                 data.write(0x64);   //Feed ling
-                data.write(5);      //กำหนดการเว้นบรรทัด
+                data.write(1);      //กำหนดการเว้นบรรทัด
                 // ควรจบด้วยแบบนี่
 
 
@@ -585,6 +582,11 @@ public class DatabaseBackupService extends IntentService {
 
     }   // forPrintLabelCondiment
 
+    private void spaceLine() {
+        data.write(0x0d);
+        data.write(0x0a);
+    }
+
     private void forPrintLabel(String myCONSECNUMBER, String[] itemNameString, int intLoop, int[] arrayITEMTYPE) {
 
         //เปิด Port ที่ใช้สำหรับ เชื่อต่อ Printer Epson
@@ -600,7 +602,7 @@ public class DatabaseBackupService extends IntentService {
 
 
             byte ESC = 0x1B;
-            ByteArrayOutputStream data = new ByteArrayOutputStream();
+             data = new ByteArrayOutputStream();
 
 
             //Print Label
@@ -611,8 +613,7 @@ public class DatabaseBackupService extends IntentService {
                 for (int y = 0; y < charConsecNumber.length; y++) {
                     data.write(charConsecNumber[y]);
                 }   //for
-                data.write(0x0d);
-                data.write(0x0a);
+               spaceLine();
 
 
                 //Print itemName
@@ -620,8 +621,10 @@ public class DatabaseBackupService extends IntentService {
                 for (int i = 0; i < charItemName.length; i++) {
                     data.write(charItemName[i]);
                 }
-                data.write(0x0d);
-                data.write(0x0a);
+                spaceLine();
+                spaceLine();
+                spaceLine();
+                spaceLine();
 
 
                 //Print Count
@@ -629,15 +632,14 @@ public class DatabaseBackupService extends IntentService {
                 for (int i = 0; i < charCount.length; i++) {
                     data.write(charCount[i]);
                 }
-                data.write(0x0d);
-                data.write(0x0a);
+
 
 
 
                //การจบแต่ละบิล
                 data.write(0x1b);   //ESC
                 data.write(0x64);   //Feed ling
-                data.write(5);      //กำหนดการเว้นบรรทัด
+                data.write(1);      //กำหนดการเว้นบรรทัด
                 // ควรจบด้วยแบบนี่
 
 
