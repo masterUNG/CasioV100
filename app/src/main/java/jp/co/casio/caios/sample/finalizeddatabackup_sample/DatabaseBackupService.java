@@ -29,6 +29,9 @@ public class DatabaseBackupService extends IntentService {
     private final String SAMPL_DBFOLDER = "/sample";
 
 
+    private String[] strItemName;
+
+
     private static final String SQLCMD_CREATE_TMP_CST004 =
             "CREATE TABLE CST004 ("
                     + "	TERMINALNUMBER	VARCHAR	(2)	NOT NULL,"
@@ -370,13 +373,15 @@ public class DatabaseBackupService extends IntentService {
 
         //เร่ิมนับ จำนวน Record บน Cursor
         int count = cursor.getCount();
-        Log.w(myTAG, "Count ที่ได้จาก CST005 ==> " + Integer.toString(count));
+        //Log.w(myTAG, "Count ที่ได้จาก CST005 ==> " + Integer.toString(count));
 
         cursor.moveToFirst();
 
         // จองหน่วยความจำให้ Array
         arrayITEMTYPE = new int[count - 2];
         ITEMNAMEStrings = new String[count - 2];
+
+        strItemName = new String[count - 2];
 
         for (int i = 0; i < count - 2; i++) {
 
@@ -390,6 +395,15 @@ public class DatabaseBackupService extends IntentService {
             itemName = cursor.getString(intITEMNAME);
             ITEMNAMEStrings[i] = itemName;
 
+            //สำหรับเก็บชื่อสินค้าทั้งหมด
+
+            strItemName[i] = itemName;
+
+          //  Log.w("25oct15", "ItemName(" + Integer.toString(i) + ") ==> " + strItemName[i]);
+
+
+
+
             //ได้ค่าของ QTY จำนวนที่สั่ง
             int intQTY = cursor.getColumnIndex("QTY");
             myQTY = cursor.getString(intQTY);
@@ -402,6 +416,17 @@ public class DatabaseBackupService extends IntentService {
             int intITEMTYPE = cursor.getColumnIndex("ITEMTYPE");
             String strITEMTYPE = cursor.getString(intITEMTYPE);
             arrayITEMTYPE[i] = Integer.parseInt(strITEMTYPE);
+
+            //arrayITEMTYPE[i] = intITEMTYPE;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -451,6 +476,20 @@ public class DatabaseBackupService extends IntentService {
             isPrintKPNo2(myCONSECNUMBER);
 
         }   //for
+
+
+        //Show Log
+        String myTAG2 = "25oct15";
+        Log.w(myTAG2, "จำนวน Record ที่ได้จาก CST005 ==> " + Integer.toString(count));
+        Log.w(myTAG2, "รอบที่ จะ loop ==> " + Integer.toString(count - 2));
+
+        for (int i = 0; i < count - 2; i++) {
+            Log.w(myTAG2, "ItemName(" + Integer.toString(i) + ") ==> " + strItemName[i]);
+            Log.w(myTAG2, "ItemType(" + Integer.toString(i) + ") ==> " + Integer.toString(arrayITEMTYPE[i]));
+
+        }   // for
+
+
 
         cursor.close();
 
