@@ -223,7 +223,7 @@ public class DatabaseBackupService extends IntentService {
 
         //Counting จำนวนทั้งของ Record
         int count = cursor.getCount();
-        Log.d(myTAG, "Count ที่อ่านได้ = " + Integer.toString(count));
+        Log.d(myTAG, "Count ที่อ่านได้ จาก CSD004 = " + Integer.toString(count));
 
 
         cursor.moveToFirst();
