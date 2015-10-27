@@ -459,18 +459,24 @@ public class DatabaseBackupService extends IntentService {
 
             String strCount = Integer.toString(intStartCount += 1) + "/" + Integer.toString(intCount);
 
-            switch (Integer.parseInt(strITEMTYPE)) {
-                case 0:
-                    forPrintLabel(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
+//            switch (Integer.parseInt(strITEMTYPE)) {
+//                case 0:
+//                    forPrintLabel(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
+//
+//                    break;
+//
+//                default:
+//
+//
+//
+//                    forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
+//
+//                    break;
+//            } // switch
 
-                    break;
 
-                default:
 
-                    forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
-
-                    break;
-            } // switch
+            forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
 
             intTime += 1;
         }   // while
@@ -499,12 +505,23 @@ public class DatabaseBackupService extends IntentService {
                     SerialCom.SERIAL_FLOW_NON);
 
 
+            int intPrintLoop = 0, intMyLoop = 0;
+            while (intPrintLoop < arrayITEMTYPE.length) {
+
+                if (arrayITEMTYPE[intPrintLoop] == 0) {
+                    intMyLoop += 1;
+                }
+
+                intPrintLoop += 1;
+            }   // while
+
+
             byte ESC = 0x1B;
             data = new ByteArrayOutputStream();
 
 
             //Print Label
-            for (int k = 0; k < intLoop; k++) {
+            for (int k = 0; k < intMyLoop; k++) {
 
                 //Print myCONSECNUMBER
                 char[] charConsecNumber = ("ConsencNumber = " + myCONSECNUMBER).toCharArray();
