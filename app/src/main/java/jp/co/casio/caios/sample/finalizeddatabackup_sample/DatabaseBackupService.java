@@ -13,14 +13,12 @@ import jp.co.casio.caios.framework.device.SerialCom;
 public class DatabaseBackupService extends IntentService {
 
     //My Explicit
-    private String myCONSECNUMBER, itemName, myQTY, myUnitPrice, strITEMTYPE,myintFunc,myarrFunc;
+    private String myCONSECNUMBER, itemName, myQTY, myUnitPrice,
+            strITEMTYPE,myintFunc,myarrFunc;
+    private String myTAG3 = "30Oct15";
     private int intCount, intStartCount = 0, intITEMNAMEcount;
     private int[] arrayITEMTYPE;
     private String[] ITEMNAMEStrings;
-    private String[] arrFunc;
-    private int intMyLoop = 0;
-
-
 
     private static String TAG = "DatabaseBackupService";
     private static String myTAG = "Master";
@@ -262,94 +260,7 @@ public class DatabaseBackupService extends IntentService {
 
     }   // copySALESWORKcst004
 
-//    private void forPrintByEPSON(String strConsecNumber,
-//                                 String strItemName,
-//                                 String strQTY,
-//                                 String strUnitPrice,
-//                                 String strMyCount) {
-//
-//        //Connected Printer Pass COM2
-//        Log.i("Master", "print epson 666");
-//        Log.i("Master", "com open");
-//        SerialCom com = new SerialCom();
-//        int ret = com.open(SerialCom.SERIAL_TYPE_COM2, 1, "localhost");
-//        if (ret == 0) { //success connect
-//            Log.i("Master", "success");
-//
-//            com.connectCom(SerialCom.SERIAL_BOUDRATE_19200,
-//                    SerialCom.SERIAL_BITLEN_8,
-//                    SerialCom.SERIAL_PARITY_NON,
-//                    SerialCom.SERIAL_STOP_1,
-//                    SerialCom.SERIAL_FLOW_NON);
-//
-//            byte ESC = 0x1B;
-//            ByteArrayOutputStream data = new ByteArrayOutputStream();
-//
-//            //Print myCONSECNUMBER
-//            char[] charConsecNumber = ("ConsencNumber = " + strConsecNumber).toCharArray();
-//            for (int i = 0; i < charConsecNumber.length; i++) {
-//                data.write(charConsecNumber[i]);
-//            }   //for
-//            data.write(0x0d);
-//            data.write(0x0a);
-//
-//            //Print itemName
-//            char[] charItemName = ("itemName = " + strItemName).toCharArray();
-//            for (int i = 0; i < charItemName.length; i++) {
-//                data.write(charItemName[i]);
-//            }
-//            data.write(0x0d);
-//            data.write(0x0a);
-//
-//
-//            //Print QTY
-//            char[] charQTY = ("QTY = " + strQTY).toCharArray();
-//            for (int i = 0; i < charQTY.length; i++) {
-//                data.write(charQTY[i]);
-//            }
-//            data.write(0x0d);
-//            data.write(0x0a);
-//
-//            //Print UnitPrice
-//            char[] charUnitPrice = ("UnitPrice = " + strUnitPrice).toCharArray();
-//            for (int i = 0; i < charUnitPrice.length; i++) {
-//                data.write(charUnitPrice[i]);
-//            }
-//            data.write(0x0d);
-//            data.write(0x0a);
-//
-//            //Print Count
-//            char[] charCount = strMyCount.toCharArray();
-//            for (int i = 0; i < charCount.length; i++) {
-//                data.write(charCount[i]);
-//            }   // for
-//            data.write(0x0d);
-//            data.write(0x0a);
-//
-//
-//            data.write(0x1b);   //ESC
-//            data.write(0x64);   //Feed ling
-//            data.write(5);
-//            // ควรจบด้วยแบบนี่
-//
-//
-//            //ของเดิม
-//            byte[] out = data.toByteArray();
-//            com.writeData(out, out.length);
-//
-//
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
-//
-//            com.close();
-//        } else
-//            Log.i("print connect", "fail");
-//
-//    }   // forPrintByEPSON
+
 
 
     private boolean copySALESWORKcst005(String tableName, String selection, String sortOrder, String createSQL) {
@@ -360,6 +271,8 @@ public class DatabaseBackupService extends IntentService {
         builder.appendPath("SALESWORK");
         builder.appendPath(tableName);
         Uri uri = builder.build();
+
+        //สร้าง Cursor จาก Consecnumber ล่าสุด
         Cursor cursor = null;
 
         try {
@@ -393,7 +306,7 @@ public class DatabaseBackupService extends IntentService {
 
         }   // for
 
-        String myTAG3 = "30Oct15";
+
         Log.w(myTAG3, "Count ที่ได้จาก CST005 ==> " + Integer.toString(count));
         Log.w(myTAG3, "จำนวน ITMENAME == " + Integer.toString(intITEMNAMEcount));
 
@@ -420,11 +333,7 @@ public class DatabaseBackupService extends IntentService {
             ITEMNAMEStrings[i] = itemName;
 
             //สำหรับเก็บชื่อสินค้าทั้งหมด
-
             strItemName[i] = itemName;
-
-            //  Log.w("25oct15", "ItemName(" + Integer.toString(i) + ") ==> " + strItemName[i]);
-
 
             //ได้ค่าของ QTY จำนวนที่สั่ง
             int intQTY = cursor.getColumnIndex("QTY");
@@ -436,107 +345,25 @@ public class DatabaseBackupService extends IntentService {
 
             //ทดสอบดึ่งค่า ITEMTYPE ประเภทของตัวสินค้า
             int intITEMTYPE = cursor.getColumnIndex("ITEMTYPE");
+
+
             strITEMTYPE = cursor.getString(intITEMTYPE);
-            arrayITEMTYPE[i] = Integer.parseInt(strITEMTYPE);
 
-
-            int arrFunc = cursor.getColumnIndex("DTLTYPE");
-            myarrFunc = cursor.getString(arrFunc);
-
-            //---------------------------
-            int counter = 0;
-            for (int k = 0; k < myarrFunc.length(); k++) {
-                if ((myarrFunc != null )) {
-                    counter++;
-                    Log.w(myTAG, "counter_arrFunc ==> " + counter);
-                    Log.w(myTAG, "counter_arrFunc_value ==> " + myarrFunc);
-                }
+            try {
+                arrayITEMTYPE[i] = Integer.parseInt(strITEMTYPE);
+            } catch (Exception e) {
+                arrayITEMTYPE[i] = 0;
+                ITEMNAMEStrings[i] = "Have Null";
             }
 
-//                int counter = 0;
-//                for (int k = 0; k < arrayITEMTYPE.length; k++) {
-//                    if ((arrayITEMTYPE != null )) {
-//                        counter++;
-//                        Log.w(myTAG, "counter_arrayITEMTYPE ==> " + counter);
-//                        Log.w(myTAG, "counter_arrayITEMTYPE_value ==> " + Integer.toString(arrayITEMTYPE[k]));
-//                    }
-//                }
-
-
-
-            //----------------------
-
-
-            //arrayITEMTYPE[i] = intITEMTYPE;
-
-
-            //Show Log
-            Log.w(myTAG, "รอบที่ ==> " + Integer.toString(i + 1));
-            Log.w(myTAG, "myCONSECNUMBER ==> " + myCONSECNUMBER);
-            Log.w(myTAG, "ItemName = " + itemName);
-            Log.w(myTAG, "QTY ==> " + myQTY);
-            Log.w(myTAG, "UnitPrice ==> " + myUnitPrice);
-            Log.w(myTAG, "ITEMTYPE ==> " + strITEMTYPE);
-            Log.w(myTAG, "DTLTYPE@@@ ==> " + myarrFunc);
-
-
-
-//            int intITEMTYPIfinal = Integer.parseInt(strITEMTYPE);
-
-
             cursor.moveToNext();
-//            isPrintKPNo2(myCONSECNUMBER);
 
         }   //for
 
 
-        //Show Log
-        String myTAG2 = "25oct15";
-        Log.w(myTAG2, "จำนวน Record ที่ได้จาก CST005 ==> " + Integer.toString(count));
-        Log.w(myTAG2, "รอบที่ จะ loop ==> " + Integer.toString(count ));
-        Log.w(myTAG2, "myQTY ที่เราได้มีค่า = " + myQTY);
-
-        for (int i = 0; i < intITEMNAMEcount ; i++) {
-            Log.w(myTAG2, "ItemName(" + Integer.toString(i) + ") ==> " + strItemName[i]);
-            Log.w(myTAG2, "ItemType(" + Integer.toString(i) + ") ==> " + Integer.toString(arrayITEMTYPE[i]));
-
-        }   // for
-
-
-        //การส่งไป พิมพ์ ที่ Epson
-
-        //     int intTime = 0;
-
-        // myQTY คือค่าของจำนวนสำค้า
-
-//        while (intTime < Integer.parseInt(myQTY)) {
-//
-//
-//            String strCount = Integer.toString(intStartCount += 1) + "/" + Integer.toString(intCount);
-//
-//            switch (Integer.parseInt(strITEMTYPE)) {
-//                case 0:
-//                    forPrintLabel(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
-//
-//                    break;
-//
-//                default:
-//
-//
-//
-//                    forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
-//
-//                    break;
-//            } // switch
-//
-//            forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, count - 2, arrayITEMTYPE);
-//
-//            intTime += 1;
-//        }   // while
-
-
-
+    //***********************************************************
     // ส่งค่าไปพิมพ์
+    // ***********************************************************
 
         Log.w(myTAG3, "myCONSECNUMBER ==> " + myCONSECNUMBER);
 

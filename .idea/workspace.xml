@@ -40,11 +40,11 @@
       <file leaf-file-name="DatabaseBackupService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.7060518">
-              <caret line="540" column="8" selection-start-line="540" selection-start-column="8" selection-end-line="540" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.33285302">
+              <caret line="355" column="49" selection-start-line="355" selection-start-column="49" selection-end-line="355" selection-end-column="49" />
               <folding>
-                <element signature="e#9327#9328#0" expanded="true" />
-                <element signature="e#9366#9367#0" expanded="true" />
+                <element signature="e#9315#9316#0" expanded="true" />
+                <element signature="e#9354#9355#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1776,12 +1776,18 @@
       <option name="project" value="LOCAL" />
       <updated>1446176846916</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="ไม่ยอมพิมพ์">
+      <created>1446179345447</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1446179345447</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="838" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1837,7 +1843,8 @@
     <MESSAGE value="Start 30Oct15" />
     <MESSAGE value="Update โดย จอย์" />
     <MESSAGE value="แก้ปัญหา การมี null" />
-    <option name="LAST_COMMIT_MESSAGE" value="แก้ปัญหา การมี null" />
+    <MESSAGE value="ไม่ยอมพิมพ์" />
+    <option name="LAST_COMMIT_MESSAGE" value="ไม่ยอมพิมพ์" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1849,8 +1856,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#9327#9328#0" expanded="true" />
-            <element signature="e#9366#9367#0" expanded="true" />
+            <element signature="e#9315#9316#0" expanded="true" />
+            <element signature="e#9354#9355#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1860,8 +1867,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#9327#9328#0" expanded="true" />
-            <element signature="e#9366#9367#0" expanded="true" />
+            <element signature="e#9315#9316#0" expanded="true" />
+            <element signature="e#9354#9355#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1871,8 +1878,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#9327#9328#0" expanded="true" />
-            <element signature="e#9366#9367#0" expanded="true" />
+            <element signature="e#9315#9316#0" expanded="true" />
+            <element signature="e#9354#9355#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1882,8 +1889,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#9327#9328#0" expanded="true" />
-            <element signature="e#9366#9367#0" expanded="true" />
+            <element signature="e#9315#9316#0" expanded="true" />
+            <element signature="e#9354#9355#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1893,19 +1900,19 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="474" column="48" selection-start-line="474" selection-start-column="48" selection-end-line="474" selection-end-column="48" />
           <folding>
-            <element signature="e#9327#9328#0" expanded="true" />
-            <element signature="e#9366#9367#0" expanded="true" />
+            <element signature="e#9315#9316#0" expanded="true" />
+            <element signature="e#9354#9355#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.7060518">
-          <caret line="540" column="8" selection-start-line="540" selection-start-column="8" selection-end-line="540" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.33285302">
+          <caret line="355" column="49" selection-start-line="355" selection-start-column="49" selection-end-line="355" selection-end-column="49" />
           <folding>
-            <element signature="e#9327#9328#0" expanded="true" />
-            <element signature="e#9366#9367#0" expanded="true" />
+            <element signature="e#9315#9316#0" expanded="true" />
+            <element signature="e#9354#9355#0" expanded="true" />
           </folding>
         </state>
       </provider>
