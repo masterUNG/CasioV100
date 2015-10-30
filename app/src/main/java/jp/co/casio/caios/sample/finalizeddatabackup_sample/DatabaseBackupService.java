@@ -373,6 +373,7 @@ public class DatabaseBackupService extends IntentService {
 
         //เร่ิมนับ จำนวน Record บน Cursor
         int count = cursor.getCount();
+
         Log.w(myTAG, "Count ที่ได้จาก CST005 ==> " + Integer.toString(count));
 
         cursor.moveToFirst();
@@ -392,7 +393,9 @@ public class DatabaseBackupService extends IntentService {
 
         }   // for
 
-        Log.w(myTAG, "จำนวน ITMENAME == " + Integer.toString(intITEMNAMEcount));
+        String myTAG3 = "30Oct15";
+        Log.w(myTAG3, "Count ที่ได้จาก CST005 ==> " + Integer.toString(count));
+        Log.w(myTAG3, "จำนวน ITMENAME == " + Integer.toString(intITEMNAMEcount));
 
 
         cursor.moveToFirst();
@@ -530,9 +533,22 @@ public class DatabaseBackupService extends IntentService {
 //
 //            intTime += 1;
 //        }   // while
-// ส่งค่าไปพิมพ์
 
-        forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, intITEMNAMEcount , arrayITEMTYPE);
+
+
+    // ส่งค่าไปพิมพ์
+
+        Log.w(myTAG3, "myCONSECNUMBER ==> " + myCONSECNUMBER);
+
+
+        for (int i = 0; i < arrayITEMTYPE.length; i++) {
+            Log.w(myTAG3, "ITEMNAMEString (" + Integer.toString(i) + ") ==> " + ITEMNAMEStrings[i]);
+            Log.w(myTAG3, "arrayITEMTYPE (" + Integer.toString(i) + ") ==> " + Integer.toString(arrayITEMTYPE[i]));
+        }
+
+        Log.w(myTAG3, "intITEMNAMEcount ==> " + Integer.toString(intITEMNAMEcount));
+
+        forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, intITEMNAMEcount, arrayITEMTYPE);
 
         cursor.close();
 

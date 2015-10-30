@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Master" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="30Oct15" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="WARN" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
@@ -40,8 +40,8 @@
       <file leaf-file-name="DatabaseBackupService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.131124">
-              <caret line="534" column="80" selection-start-line="534" selection-start-column="80" selection-end-line="534" selection-end-column="80" />
+            <state vertical-scroll-proportion="2.7060518">
+              <caret line="540" column="8" selection-start-line="540" selection-start-column="8" selection-end-line="540" selection-end-column="8" />
               <folding>
                 <element signature="e#9327#9328#0" expanded="true" />
                 <element signature="e#9366#9367#0" expanded="true" />
@@ -1770,7 +1770,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446171585919</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="แก้ปัญหา การมี null">
+      <created>1446176846916</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1446176846916</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1782,7 +1788,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32963988" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7839335" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6371191" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1830,7 +1836,8 @@
     <MESSAGE value="27 Oct Finish" />
     <MESSAGE value="Start 30Oct15" />
     <MESSAGE value="Update โดย จอย์" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update โดย จอย์" />
+    <MESSAGE value="แก้ปัญหา การมี null" />
+    <option name="LAST_COMMIT_MESSAGE" value="แก้ปัญหา การมี null" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1894,8 +1901,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.131124">
-          <caret line="534" column="80" selection-start-line="534" selection-start-column="80" selection-end-line="534" selection-end-column="80" />
+        <state vertical-scroll-proportion="2.7060518">
+          <caret line="540" column="8" selection-start-line="540" selection-start-column="8" selection-end-line="540" selection-end-column="8" />
           <folding>
             <element signature="e#9327#9328#0" expanded="true" />
             <element signature="e#9366#9367#0" expanded="true" />
