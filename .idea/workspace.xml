@@ -7,6 +7,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82b20d0b-b8e8-4fc5-b086-7771fe038aec" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/classes.dex" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/classes.dex" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.java" afterPath="$PROJECT_DIR$/app/src/main/java/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TestCasioV1-master.iws" />
@@ -31,10 +40,11 @@
       <file leaf-file-name="DatabaseBackupService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="541" column="29" selection-start-line="541" selection-start-column="29" selection-end-line="541" selection-end-column="29" />
+            <state vertical-scroll-proportion="-6.8097982">
+              <caret line="268" column="11" selection-start-line="268" selection-start-column="11" selection-end-line="268" selection-end-column="11" />
               <folding>
-                <element signature="method#forPrintByEPSON#0;class#DatabaseBackupService#0" expanded="false" />
+                <element signature="e#9308#9309#0" expanded="true" />
+                <element signature="e#9347#9348#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1748,7 +1758,13 @@
       <option name="project" value="LOCAL" />
       <updated>1445910734561</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Start 30Oct15">
+      <created>1446171121156</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1446171121156</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1762,6 +1778,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6731302" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1775,17 +1792,16 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964234" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32963988" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32963988" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
@@ -1806,7 +1822,8 @@
     <MESSAGE value="itemName แรก&#10;itemName สอง มี Condiment ได้" />
     <MESSAGE value="พิมพ์ Product โอเซ" />
     <MESSAGE value="27 Oct Finish" />
-    <option name="LAST_COMMIT_MESSAGE" value="27 Oct Finish" />
+    <MESSAGE value="Start 30Oct15" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start 30Oct15" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1818,7 +1835,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="method#forPrintByEPSON#0;class#DatabaseBackupService#0" expanded="false" />
+            <element signature="e#9308#9309#0" expanded="true" />
+            <element signature="e#9347#9348#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1828,7 +1846,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="method#forPrintByEPSON#0;class#DatabaseBackupService#0" expanded="false" />
+            <element signature="e#9308#9309#0" expanded="true" />
+            <element signature="e#9347#9348#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1838,7 +1857,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="method#forPrintByEPSON#0;class#DatabaseBackupService#0" expanded="false" />
+            <element signature="e#9308#9309#0" expanded="true" />
+            <element signature="e#9347#9348#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1848,7 +1868,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="method#forPrintByEPSON#0;class#DatabaseBackupService#0" expanded="false" />
+            <element signature="e#9308#9309#0" expanded="true" />
+            <element signature="e#9347#9348#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1858,17 +1879,19 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="474" column="48" selection-start-line="474" selection-start-column="48" selection-end-line="474" selection-end-column="48" />
           <folding>
-            <element signature="method#forPrintByEPSON#0;class#DatabaseBackupService#0" expanded="false" />
+            <element signature="e#9308#9309#0" expanded="true" />
+            <element signature="e#9347#9348#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/jp/co/casio/caios/sample/finalizeddatabackup_sample/DatabaseBackupService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="541" column="29" selection-start-line="541" selection-start-column="29" selection-end-line="541" selection-end-column="29" />
+        <state vertical-scroll-proportion="-6.8097982">
+          <caret line="268" column="11" selection-start-line="268" selection-start-column="11" selection-end-line="268" selection-end-column="11" />
           <folding>
-            <element signature="method#forPrintByEPSON#0;class#DatabaseBackupService#0" expanded="false" />
+            <element signature="e#9308#9309#0" expanded="true" />
+            <element signature="e#9347#9348#0" expanded="true" />
           </folding>
         </state>
       </provider>
