@@ -380,6 +380,8 @@ public class DatabaseBackupService extends IntentService {
         //จัดระเบียบ Array
         String[] finalITEMNAME = forITEMNAMEstring(ITEMNAMEStrings);
 
+
+
         int[] finalArrayITEMTYPE = forITEMTYPE(arrayITEMTYPE);
 
 
@@ -419,8 +421,11 @@ public class DatabaseBackupService extends IntentService {
 
     private String[] forITEMNAMEstring(String[] itemnameStrings) {
 
+        String TAG5 = "test1";
+        Log.w(TAG5, "ส่งเข้ามากี่ค่า ==> " + Integer.toString(itemnameStrings.length));
 
-        int intTime = 0;
+
+        int intTime = 0; // จำนวน Array ที่ไม่ม่ี Have Null
         for (int i = 0; i < itemnameStrings.length; i++) {
 
             if (!itemnameStrings[i].equals("Have Null")) {
@@ -430,6 +435,7 @@ public class DatabaseBackupService extends IntentService {
 
         int intIndex = 0;
         String[] strResult = new String[intTime];
+
         for (int i = 0; i < itemnameStrings.length; i++) {
 
             if (!itemnameStrings[i].equals("Have Null")) {
@@ -439,12 +445,17 @@ public class DatabaseBackupService extends IntentService {
 
         } //for
 
-
+        Log.w(TAG5, "ส่งค่าออก ==> " + Integer.toString(strResult.length));
         return strResult;
     }
 
 
     private void forPrintLabelCondiment(String myCONSECNUMBER, String[] itemNameStrings, int intLoop, int[] arrayITEMTYPE) {
+
+        //Check Argument
+        String TAG4 = "Epson";
+        Log.w(TAG4, "จำนวนของ arrayITEMTYPE ==>>" + Integer.toString(arrayITEMTYPE.length));
+        Log.w(TAG4, "ค่าวนลูป การพิมพ์ == " + Integer.toString(intLoop));
 
 
         //เปิด Port ที่ใช้สำหรับ เชื่อต่อ Printer Epson
