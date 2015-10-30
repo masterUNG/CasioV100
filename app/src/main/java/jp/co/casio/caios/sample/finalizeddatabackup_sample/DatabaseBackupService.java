@@ -14,11 +14,12 @@ public class DatabaseBackupService extends IntentService {
 
     //My Explicit
     private String myCONSECNUMBER, itemName, myQTY, myUnitPrice, strITEMTYPE,myintFunc,myarrFunc;
-    private int intCount, intStartCount = 0;
+    private int intCount, intStartCount = 0, intITEMNAMEcount;
     private int[] arrayITEMTYPE;
     private String[] ITEMNAMEStrings;
     private String[] arrFunc;
     private int intMyLoop = 0;
+
 
 
     private static String TAG = "DatabaseBackupService";
@@ -202,9 +203,6 @@ public class DatabaseBackupService extends IntentService {
         copySALESWORKcst005("CST005", selection, "LINENUMBER ASC", SQLCMD_CREATE_TMP_CST005);
 
 
-        //forPrintByEPSON("Test by Master");
-
-
     }   // Handler Initen
 
     private boolean copySALESWORKcst004(String tableName, String selection, String sortOrder, String createSQL) {
@@ -377,19 +375,35 @@ public class DatabaseBackupService extends IntentService {
         int count = cursor.getCount();
         Log.w(myTAG, "Count ที่ได้จาก CST005 ==> " + Integer.toString(count));
 
+        cursor.moveToFirst();
+
+        //ทดสอบหา จำนวน ItemName
+        intITEMNAMEcount = 0;
+
+        for (int i = 0; i < count; i++) {
+
+            String strMyITEMNAME = cursor.getString(cursor.getColumnIndex("ITEMNAME"));
+
+            if (strMyITEMNAME != null) {
+                intITEMNAMEcount += 1;
+            }
+
+            cursor.moveToNext();
+
+        }   // for
+
+        Log.w(myTAG, "จำนวน ITMENAME == " + Integer.toString(intITEMNAMEcount));
 
 
         cursor.moveToFirst();
 
-
-
         // จองหน่วยความจำให้ Array
-        arrayITEMTYPE = new int[count -2 ];
-        ITEMNAMEStrings = new String[count -2];
+        arrayITEMTYPE = new int[intITEMNAMEcount];
+        ITEMNAMEStrings = new String[intITEMNAMEcount];
 
-        strItemName = new String[count-2 ];
+        strItemName = new String[intITEMNAMEcount];
 
-        for (int i = 0; i < count-2  ; i++) {
+        for (int i = 0; i < intITEMNAMEcount  ; i++) {
 
 
             //ค่า CONSECNUMBER หมายเลขบิล
@@ -479,7 +493,7 @@ public class DatabaseBackupService extends IntentService {
         Log.w(myTAG2, "รอบที่ จะ loop ==> " + Integer.toString(count ));
         Log.w(myTAG2, "myQTY ที่เราได้มีค่า = " + myQTY);
 
-        for (int i = 0; i < count-2 ; i++) {
+        for (int i = 0; i < intITEMNAMEcount ; i++) {
             Log.w(myTAG2, "ItemName(" + Integer.toString(i) + ") ==> " + strItemName[i]);
             Log.w(myTAG2, "ItemType(" + Integer.toString(i) + ") ==> " + Integer.toString(arrayITEMTYPE[i]));
 
@@ -518,7 +532,7 @@ public class DatabaseBackupService extends IntentService {
 //        }   // while
 // ส่งค่าไปพิมพ์
 
-        forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, count-2 , arrayITEMTYPE);
+        forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, intITEMNAMEcount , arrayITEMTYPE);
 
         cursor.close();
 
