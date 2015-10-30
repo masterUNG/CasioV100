@@ -14,7 +14,7 @@ public class DatabaseBackupService extends IntentService {
 
     //My Explicit
     private String myCONSECNUMBER, itemName, myQTY, myUnitPrice,
-            strITEMTYPE,myintFunc,myarrFunc;
+            strITEMTYPE, myintFunc, myarrFunc;
     private String myTAG3 = "30Oct15";
     private int intCount, intStartCount = 0, intITEMNAMEcount;
     private int[] arrayITEMTYPE;
@@ -261,8 +261,6 @@ public class DatabaseBackupService extends IntentService {
     }   // copySALESWORKcst004
 
 
-
-
     private boolean copySALESWORKcst005(String tableName, String selection, String sortOrder, String createSQL) {
 
         Uri.Builder builder = new Uri.Builder();
@@ -319,7 +317,7 @@ public class DatabaseBackupService extends IntentService {
 
         strItemName = new String[intITEMNAMEcount];
 
-        for (int i = 0; i < intITEMNAMEcount  ; i++) {
+        for (int i = 0; i < intITEMNAMEcount; i++) {
 
 
             //ค่า CONSECNUMBER หมายเลขบิล
@@ -352,7 +350,7 @@ public class DatabaseBackupService extends IntentService {
             try {
                 arrayITEMTYPE[i] = Integer.parseInt(strITEMTYPE);
             } catch (Exception e) {
-                arrayITEMTYPE[i] = 0;
+                arrayITEMTYPE[i] = 9;
                 ITEMNAMEStrings[i] = "Have Null";
             }
 
@@ -361,9 +359,9 @@ public class DatabaseBackupService extends IntentService {
         }   //for
 
 
-    //***********************************************************
-    // ส่งค่าไปพิมพ์
-    // ***********************************************************
+        //***********************************************************
+        // ส่งค่าไปพิมพ์
+        // ***********************************************************
 
         Log.w(myTAG3, "myCONSECNUMBER ==> " + myCONSECNUMBER);
 
@@ -375,7 +373,17 @@ public class DatabaseBackupService extends IntentService {
 
         Log.w(myTAG3, "intITEMNAMEcount ==> " + Integer.toString(intITEMNAMEcount));
 
-        forPrintLabelCondiment(myCONSECNUMBER, ITEMNAMEStrings, intITEMNAMEcount, arrayITEMTYPE);
+        //***********************************************************
+        // ส่งค่าไปพิมพ์ เริ่มตรงนี่
+        // ***********************************************************
+
+        //จัดระเบียบ Array
+        String[] finalITEMNAME = forITEMNAMEstring(ITEMNAMEStrings);
+
+        int[] finalArrayITEMTYPE = forITEMTYPE(arrayITEMTYPE);
+
+
+        forPrintLabelCondiment(myCONSECNUMBER, finalITEMNAME, finalITEMNAME.length, finalArrayITEMTYPE);
 
         cursor.close();
 
@@ -384,6 +392,56 @@ public class DatabaseBackupService extends IntentService {
 
 
     }    // Method copySalseWork
+
+    private int[] forITEMTYPE(int[] arrayITEMTYPE) {
+
+        int intTime = 0;
+        for (int i = 0; i < arrayITEMTYPE.length; i++) {
+
+            if (arrayITEMTYPE[i] != 9) {
+                intTime += 1;
+            }
+
+        }   //for
+        int intIndex = 0;
+        int[] intResult = new int[intTime];
+        for (int i = 0; i < arrayITEMTYPE.length; i++) {
+
+            if (arrayITEMTYPE[i] != 9) {
+                intResult[intIndex] = arrayITEMTYPE[i];
+                intIndex += 1;
+            }   // if
+
+        }   // for
+
+        return intResult;
+    }
+
+    private String[] forITEMNAMEstring(String[] itemnameStrings) {
+
+
+        int intTime = 0;
+        for (int i = 0; i < itemnameStrings.length; i++) {
+
+            if (!itemnameStrings[i].equals("Have Null")) {
+                intTime += 1;
+            }   // if
+        }   // for
+
+        int intIndex = 0;
+        String[] strResult = new String[intTime];
+        for (int i = 0; i < itemnameStrings.length; i++) {
+
+            if (!itemnameStrings[i].equals("Have Null")) {
+                strResult[intIndex] = itemnameStrings[i];
+                intIndex += 1;
+            }
+
+        } //for
+
+
+        return strResult;
+    }
 
 
     private void forPrintLabelCondiment(String myCONSECNUMBER, String[] itemNameStrings, int intLoop, int[] arrayITEMTYPE) {
@@ -404,76 +462,60 @@ public class DatabaseBackupService extends IntentService {
             data = new ByteArrayOutputStream();
 
 
-
-
-            int intPrintLoop = 0, intMyLoop = 0;
+            int intPrintLoop = 0, intMyLoop = 0;    // นี่คือจำนวน Label ที่ต้องการพิ่มพ์
             while (intPrintLoop < arrayITEMTYPE.length) {
 
+                //ตรวจ ว่า arrayITEM ต้องไม่เท่ากับ 0 นะ
                 if (arrayITEMTYPE[intPrintLoop] == 0) {
                     intMyLoop += 1;
                 }
 
                 intPrintLoop += 1;
             }   // while
-//
-            //String myCONSECNUMBER, String[] itemNameStrings, int intLoop, int[] arrayITEMTYPE
-            //----------------------------------------
-            int ConQty, CheckLineFeed = 0, MaxCon = 4, test, count = 0;
-//            Log.w(myTAG, "itemNameStrings0 ==> " + itemNameStrings[0]);
-//            Log.w(myTAG, "itemNameStrings1 ==> " + itemNameStrings[1]);
-//            Log.w(myTAG, "intLoop ==> " + intLoop);
 
+            int ConQty, CheckLineFeed = 0, MaxCon = 4, test, count = 0;
+
+            //##################################################
+            // เริ่ม วนลูป พิ่มพ์
+            //##################################################
             for (int LoopCheckRec = 0; LoopCheckRec < intLoop; LoopCheckRec++) {   //Check Loop < Count-2
-                test=0;
-                if (arrayITEMTYPE[LoopCheckRec]== 0) {
+                test = 0;
+                if (arrayITEMTYPE[LoopCheckRec] == 0) {
                     count++;
 
-
-//                    data.write(0x1D); //character size double-width
-//                    data.write(0x21);
-//                    data.write(0x01);
-
+                    //##################################################
                     //Print myCONSECNUMBER
-                    char[] charConsecNumber = ("#"+ myCONSECNUMBER +"         ("+count+"/"+intMyLoop+")").toCharArray();
+                    //##################################################
+                    char[] charConsecNumber = ("#" + myCONSECNUMBER + "         (" + count + "/" + intMyLoop + ")").toCharArray();
                     for (int y = 0; y < charConsecNumber.length; y++) {
                         data.write(charConsecNumber[y]);
                     }   //for
                     spaceLine();
-//                    data.write(0x1D); //cancel character size double-width
-//                    data.write(0x21);
-//                    data.write(0x00);
 
-                    char[] charItemName = (itemNameStrings[LoopCheckRec]).toCharArray();
+                    //##################################################
                     //Print ProductName
-                    Log.w(myTAG, "LoopCheckRec PLU ==> " + LoopCheckRec);
-
+                    //##################################################
+                    char[] charItemName = (itemNameStrings[LoopCheckRec]).toCharArray();
                     for (int y = 0; y < charItemName.length; y++) {
                         data.write(charItemName[y]);
-                        Log.w(myTAG, "PLU " + LoopCheckRec +" ==> " + charItemName[y]);
                     }   //for
-                    //               Log.w(myTAG, "LoopCheckRec ==> " + LoopCheckRec);
-
                     spaceLine();
-                    test=1;
+
+
+                    // เอามาตัก  Contiment เป้น
+                    test = 1;
                 }//if
 
                 ConQty = 0;
 
-                while (LoopCheckRec + 1 < intLoop && arrayITEMTYPE[LoopCheckRec + 1] != 0 && ConQty < MaxCon && test==1) {
-                    //Check arrayITEMTYPE ในตำแหน่งถัดไป  && ConQty < MaxCon
-                    Log.w(myTAG, "ConQty ==> " + ConQty);
-                    Log.w(myTAG, "MaxCon ==> " + MaxCon);
+                while (LoopCheckRec + 1 < intLoop && arrayITEMTYPE[LoopCheckRec + 1] != 0 && ConQty < MaxCon && test == 1) {
 
                     LoopCheckRec++;
                     ConQty++;
-                    Log.w(myTAG, "intLoop ==> " + intLoop);
-                    Log.w(myTAG, "LoopCheckRec CON ==> " + Integer.toString(LoopCheckRec));
-//                    Log.w(myTAG, "arrayITEMTYPE ==> " + arrayITEMTYPE[LoopCheckRec]);
-//                    Log.w(myTAG, "arrayITEMTYPE1 ==> " + arrayITEMTYPE[LoopCheckRec + 1]);
-//                    Log.w(myTAG, "arrayITEMTYPE2 ==> " + arrayITEMTYPE[LoopCheckRec+1]);
-//                    //New line
 
-//                    //Print Condiment
+                    //##################################################
+                    //Print Condiment
+                    //##################################################
                     char[] charCon = ("  " + (itemNameStrings[LoopCheckRec])).toCharArray();
 
                     for (int y = 0; y < charCon.length; y++) {
@@ -481,13 +523,7 @@ public class DatabaseBackupService extends IntentService {
                         Log.w(myTAG, "Y-Con ==> " + charCon[y]);
                     }   //for
                     spaceLine();
-
-
-                } //End while ใน
-                //Check line feed เพื่อขึ้นบรรทัดใหม่
-//                CheckLineFeed = MaxCon - ConQty;
-//                spaceLine();
-
+                } //End while
 
 
                 data.write(0x1C);//Feed paper to the label peeling position
@@ -497,75 +533,8 @@ public class DatabaseBackupService extends IntentService {
                 data.write(0x00);
                 data.write(0x41);
                 data.write(0x30);
-//                data.write(CheckLineFeed);      //กำหนดการเว้นบรรทัดy
-
 
             } //End for นอก
-//            com.close();
-
-
-            //----------------------------------------
-
-
-            //Print Label
-//            for (int k = 0; k < intMyLoop; k++) {
-//
-//                //Print myCONSECNUMBER
-//                char[] charConsecNumber = ("ConsencNumber = " + myCONSECNUMBER).toCharArray();
-//                for (int y = 0; y < charConsecNumber.length; y++) {
-//                 //   data.write(charConsecNumber[y]);
-//                }   //for
-//                //spaceLine();
-//
-//
-//                //Print itemName
-//                char[] charItemName = ("itemName = " + itemNameStrings[k]).toCharArray();
-//                for (int i = 0; i < charItemName.length; i++) {
-//                 //   data.write(charItemName[i]);
-//                }
-//               // spaceLine();
-//
-//
-//                //Print Condiment
-////                int intCondiment;
-////                try {
-////
-////                    intCondiment = arrayITEMTYPE[k + 1];
-////                    if (intCondiment != 0) {
-////
-////                        char[] charCondiment = ("Condiment ==> " + itemNameStrings[k + 1]).toCharArray();
-////                        for (int i = 0; i < charCondiment.length; i++) {
-////                         //   data.write(charCondiment[i]);
-////                        }
-////
-////                        k += 1;
-////
-////                    }   // if
-////                    //spaceLine();
-////
-////                } catch (Exception e) {
-////
-////                } //try
-//
-//
-//
-//                //Print Count
-//                char[] charCount = (Integer.toString(k + 1) + "/" + Integer.toString(intLoop)).toCharArray();
-//                for (int i = 0; i < charCount.length; i++) {
-//                 //   data.write(charCount[i]);
-//                }
-//                //spaceLine();
-//
-//
-//
-//                //การจบแต่ละบิล
-//              //  data.write(0x1b);   //ESC
-//              //  data.write(0x64);   //Feed ling
-//              //  data.write(1);      //กำหนดการเว้นบรรทัด
-//                // ควรจบด้วยแบบนี่
-//
-//
-//            }   // for
 
             //ของเดิม
             byte[] out = data.toByteArray();
