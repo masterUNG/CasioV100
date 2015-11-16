@@ -6,35 +6,21 @@
         jumboMode="false"
         revision="23.0.1"
         sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
-        <dex dex="/Users/masterUNG/MyWorkspace/Studio_Casio_Test1/Test/app/build/intermediates/pre-dexed/debug/support-v4-18.0.0-c6c5387b6413c21c5d57b72eca33a073b7380282.jar" />
+        <dex dex="/Users/masterUNG/MyWorkspace/Studio_V100/CasioV100/app/build/intermediates/pre-dexed/debug/support-v4-18.0.0-c6c5387b6413c21c5d57b72eca33a073b7380282.jar" />
     </item>
     <item
-        jar="/Users/masterUNG/MyWorkspace/Studio_Casio_Test1/Test/app/libs/casioregdevicelibrary.jar"
+        jar="/Users/masterUNG/MyWorkspace/Studio_V100/CasioV100/app/libs/casioregdevicelibrary.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="db4193a8fd1fde2efe959bc9b41498bd3ac431a6">
-        <dex dex="/Users/masterUNG/MyWorkspace/Studio_Casio_Test1/Test/app/build/intermediates/pre-dexed/debug/casioregdevicelibrary-c81522c177ba308b2d0e0446f4434a9905e5bfaf.jar" />
+        <dex dex="/Users/masterUNG/MyWorkspace/Studio_V100/CasioV100/app/build/intermediates/pre-dexed/debug/casioregdevicelibrary-d0de28aabdd584a8e862d42a423643925bcf7e41.jar" />
     </item>
     <item
-        jar="/Users/masterUNG/MyWorkspace/Studio_V100/TestCasioV1-master/app/libs/casioregdevicelibrary.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="db4193a8fd1fde2efe959bc9b41498bd3ac431a6">
-        <dex dex="/Users/masterUNG/MyWorkspace/Studio_V100/TestCasioV1-master/app/build/intermediates/pre-dexed/debug/casioregdevicelibrary-d8359999fdf2f4ecc6a49713d9980887c3213de8.jar" />
-    </item>
-    <item
-        jar="/Users/masterUNG/MyWorkspace/Studio_V100/TestCasioV1-master/app/libs/caiosdevice.jar"
+        jar="/Users/masterUNG/MyWorkspace/Studio_V100/CasioV100/app/libs/caiosdevice.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="f19c48c49fe1b47635be79045d519480795d539a">
-        <dex dex="/Users/masterUNG/MyWorkspace/Studio_V100/TestCasioV1-master/app/build/intermediates/pre-dexed/debug/caiosdevice-ec63442740a640236ebee6df2cb0a09cba300c89.jar" />
-    </item>
-    <item
-        jar="/Users/masterUNG/MyWorkspace/Studio_Casio_Test1/Test/app/libs/caiosdevice.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="f19c48c49fe1b47635be79045d519480795d539a">
-        <dex dex="/Users/masterUNG/MyWorkspace/Studio_Casio_Test1/Test/app/build/intermediates/pre-dexed/debug/caiosdevice-9c2af81c62b32582b0bed146413516f6957b7e01.jar" />
+        <dex dex="/Users/masterUNG/MyWorkspace/Studio_V100/CasioV100/app/build/intermediates/pre-dexed/debug/caiosdevice-eda17fb5a119edf0cc49ac0c35ce0baf8c7b861c.jar" />
     </item>
 
 </items>

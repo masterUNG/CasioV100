@@ -17,7 +17,7 @@ public class DatabaseBackupService extends IntentService {
     //My Explicit
     private String myQTY;
     private String myCONSECNUMBER, itemName, myUnitPrice, strITEMTYPE, myintFunc, myarrFunc;
-    private int intCount,countQty=0, intStartCount = 0, intITEMNAMEcount, intConsecnumcount,checkLineconBuffer = 0,
+    private int intCount, countQty = 0, intStartCount = 0, intITEMNAMEcount, intConsecnumcount, checkLineconBuffer = 0,
     //*****------Point for Change Max Value ------*****
     maxFontCon = 26,            //No comment
             maxFontName = 30,           //จำนวน Character ของชื่อสินค้าหลัก
@@ -476,6 +476,11 @@ public class DatabaseBackupService extends IntentService {
                             charItemCondiment = ("," + ContoTIS620).toCharArray();
                         }
 
+                        //--------------------------------------------------------
+                        // ตัวส่งไปที่ conBuffer
+                        //--------------------------------------------------------
+
+
                         conBuffer(charItemCondiment);
                         if (checkLineconBuffer % condimentPerLine == 0) {  //จำนวน Condiment ต่อหนึ่งบรรทัด
                             spaceLine();
@@ -517,7 +522,7 @@ public class DatabaseBackupService extends IntentService {
             char c = out.charAt(i);
             //Log.w(TAG, "Char in ==> "+c);
             //Character a = TIS620TBL.get(c);
-            Character a = (Character)TIS620TBL.get(Character.valueOf(c));
+            Character a = (Character) TIS620TBL.get(Character.valueOf(c));
             //Log.w(TAG, "Char out ==> " +a);
             if (a != null) {
                 //out.setCharAt(i, a);
@@ -539,41 +544,52 @@ public class DatabaseBackupService extends IntentService {
 
     private void conBuffer(char[] text) {
 
-        //บรรทัด 1
+        //--------------------------------------------------------
+        //บรรทัด 1 นี่คือ สระบน ตัวเดี่ยว
+        //--------------------------------------------------------
+
+
         int j = 0;
         for (int y = 0; y < text.length && y < maxFontCon; y++) {
+
+            // หาสระบน และ ล่างก่อน
             try {
-                if (text[y] == 0xD1 | text[y] == 0xD4 | text[y] == 0xD5 | text[y] == 0xD6 | text[y] == 0xD7 | text[y] == 0xE7
-                        | text[y] == 0xE8 | text[y] == 0xE9 | text[y] == 0xEA | text[y] == 0xEB | text[y] == 0xEC | text[y] == 0xD8 | text[y] == 0xD9
-                        | text[y] == 0x80 | text[y] == 0x81 | text[y] == 0x82 | text[y] == 0x83 | text[y] == 0x84 | text[y] == 0x85 | text[y] == 0x86
-                        | text[y] == 0x87 | text[y] == 0x88 | text[y] == 0x89 | text[y] == 0x8A | text[y] == 0x8B | text[y] == 0x8C | text[y] == 0x8E
-                        | text[y] == 0x91 | text[y] == 0x92 | text[y] == 0x93 | text[y] == 0x94 | text[y] == 0x95 | text[y] == 0x96 | text[y] == 0x97
-                        | text[y] == 0x98) {
+                if (checkUper(text[y])) {
 
                     if (!(text[y] == 0xD8 | text[y] == 0xD9)) {
-                        data.write(text[y]);
-                    } else data.write(0x20);
-                } else if (!(text[y + 1] == 0xD1 | text[y + 1] == 0xD4 | text[y + 1] == 0xD5 | text[y + 1] == 0xD6 | text[y + 1] == 0xD7 | text[y + 1] == 0xE7 | text[y + 1] == 0xE8 |
-                        text[y + 1] == 0xE9 | text[y + 1] == 0xEA | text[y + 1] == 0xEB | text[y + 1] == 0xEC | text[y + 1] == 0xD8 | text[y + 1] == 0xD9)) {
+
+                        data.write(text[y]);    // พิ่มพ์ได้เลย
+
+                    } else data.write(0x20); // เขียนช่องว่าง
+
+                } else if (!checkUper(text[y+1]))
+                {
                     data.write(0x20);
                 }
+
             } catch (Exception e) {
                 Log.w(TAG, "End fo char");
             }
         }   //for
         spaceLine();
 
-        //บรรทัด 2
+
+        //--------------------------------------------------------
+        //บรรทัด 2  นี่คือ อักษรกลาง
+        //--------------------------------------------------------
         for (int y = 0; y < text.length && y < maxFontCon; y++) {
             if (text[y] == 0xD1 | text[y] == 0xD4 | text[y] == 0xD5 | text[y] == 0xD6 | text[y] == 0xD7 |
                     text[y] == 0xE7 | text[y] == 0xE8 | text[y] == 0xE9 | text[y] == 0xEA | text[y] == 0xEB | text[y] == 0xEC |
-                    text[y] == 0xD8 | text[y] == 0xD9) {
-                //Log.w(TAG, "text[ "+y+" ] = "+ text[y]);
+                    text[y] == 0xD8 | text[y] == 0xD9) {    // ไม่ทำอะไร
+
             } else data.write(text[y]);
         }   //for
         spaceLine();
 
-        //บรรทัด 3
+
+        //--------------------------------------------------------
+        //บรรทัด 3  นี่คือ สระล่าง
+        //--------------------------------------------------------
         for (int y = 0; y < text.length && y < maxFontCon; y++) {
             try {
                 if (text[y] == 0xD1 | text[y] == 0xD4 | text[y] == 0xD5 | text[y] == 0xD6 | text[y] == 0xD7 | text[y] == 0xE7
@@ -599,6 +615,17 @@ public class DatabaseBackupService extends IntentService {
 
         checkLineconBuffer += 1;
     }//เก็บค่า Condiment เข้า ByteArrayOutputStream รอส่งพิมพ์
+
+    // คือการหา สระยน และ ล่าง ถ้ามี True
+
+    private boolean checkUper(char text) {
+        return text == 0xD1 | text == 0xD4 | text == 0xD5 | text == 0xD6 | text == 0xD7 | text == 0xE7
+                | text == 0xE8 | text == 0xE9 | text == 0xEA | text == 0xEB | text == 0xEC | text == 0xD8 | text == 0xD9
+                | text == 0x80 | text == 0x81 | text == 0x82 | text == 0x83 | text == 0x84 | text == 0x85 | text == 0x86
+                | text == 0x87 | text == 0x88 | text == 0x89 | text == 0x8A | text == 0x8B | text == 0x8C | text == 0x8E
+                | text == 0x91 | text == 0x92 | text == 0x93 | text == 0x94 | text == 0x95 | text == 0x96 | text == 0x97
+                | text == 0x98;
+    }
 
 
     private void nextLabel() {
@@ -641,7 +668,7 @@ public class DatabaseBackupService extends IntentService {
         int resultQTY = 0;
         for (int i = 0; i < arrayITEMTYPE.length; i++) {
             if (arrayITEMTYPE[i] == 0) {
-                resultQTY+=1;
+                resultQTY += 1;
             }
         }
 
