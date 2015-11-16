@@ -312,7 +312,7 @@ public class DatabaseBackupService extends IntentService {
 
             TIS620TBL = new HashMap<Character, Character>() {
         {
-            //put(¥u2212, (char) 0x2D);
+
             put((char) ' ', (char) 0x20);
             put((char) 0xA0, (char) 0x20);
             put((char) 'ก', (char) 0xA1);
@@ -405,6 +405,13 @@ public class DatabaseBackupService extends IntentService {
             put((char) '๘', (char) 0xF8);
             put((char) '๙', (char) 0xF9);
             //--------------------------
+
+
+
+
+
+
+
         }
     };
 
@@ -554,18 +561,9 @@ public class DatabaseBackupService extends IntentService {
 
             // หาสระบน และ ล่างก่อน
             try {
-                if (checkUper(text[y])) {
 
-                    if (!(text[y] == 0xD8 | text[y] == 0xD9)) {
-
-                        data.write(text[y]);    // พิ่มพ์ได้เลย
-
-                    } else data.write(0x20); // เขียนช่องว่าง
-
-                } else if (!checkUper(text[y+1]))
-                {
-                    data.write(0x20);
-                }
+                data.write(thaiPaint(text[y+1], text[y + 2]));
+               y = y + spicialAdd(text[y], text[y + 1]);
 
             } catch (Exception e) {
                 Log.w(TAG, "End fo char");
@@ -574,9 +572,12 @@ public class DatabaseBackupService extends IntentService {
         spaceLine();
 
 
+
+
         //--------------------------------------------------------
         //บรรทัด 2  นี่คือ อักษรกลาง
         //--------------------------------------------------------
+
         for (int y = 0; y < text.length && y < maxFontCon; y++) {
             if (text[y] == 0xD1 | text[y] == 0xD4 | text[y] == 0xD5 | text[y] == 0xD6 | text[y] == 0xD7 |
                     text[y] == 0xE7 | text[y] == 0xE8 | text[y] == 0xE9 | text[y] == 0xEA | text[y] == 0xEB | text[y] == 0xEC |
@@ -590,31 +591,214 @@ public class DatabaseBackupService extends IntentService {
         //--------------------------------------------------------
         //บรรทัด 3  นี่คือ สระล่าง
         //--------------------------------------------------------
-        for (int y = 0; y < text.length && y < maxFontCon; y++) {
-            try {
-                if (text[y] == 0xD1 | text[y] == 0xD4 | text[y] == 0xD5 | text[y] == 0xD6 | text[y] == 0xD7 | text[y] == 0xE7
-                        | text[y] == 0xE8 | text[y] == 0xE9 | text[y] == 0xEA | text[y] == 0xEB | text[y] == 0xEC | text[y] == 0xD8 | text[y] == 0xD9
-                        | text[y] == 0x80 | text[y] == 0x81 | text[y] == 0x82 | text[y] == 0x83 | text[y] == 0x84 | text[y] == 0x85 | text[y] == 0x86
-                        | text[y] == 0x87 | text[y] == 0x88 | text[y] == 0x89 | text[y] == 0x8A | text[y] == 0x8B | text[y] == 0x8C | text[y] == 0x8E
-                        | text[y] == 0x91 | text[y] == 0x92 | text[y] == 0x93 | text[y] == 0x94 | text[y] == 0x95 | text[y] == 0x96 | text[y] == 0x97
-                        | text[y] == 0x98) {
 
-                    if ((text[y] == 0xD8 | text[y] == 0xD9)) {
-                        data.write(text[y]);
-                    } else data.write(0x20);
-
-                } else if (!(text[y + 1] == 0xD1 | text[y + 1] == 0xD4 | text[y + 1] == 0xD5 | text[y + 1] == 0xD6 | text[y + 1] == 0xD7 | text[y + 1] == 0xE7 | text[y + 1] == 0xE8 |
-                        text[y + 1] == 0xE9 | text[y + 1] == 0xEA | text[y + 1] == 0xEB | text[y + 1] == 0xEC | text[y + 1] == 0xD8 | text[y + 1] == 0xD9)) {
-                    data.write(0x20);
-                }
-            } catch (Exception e) {
-                Log.w(TAG, "End fo char");
-            }
-        }
-        spaceLine();
+//        for (int y = 0; y < text.length && y < maxFontCon; y++) {
+//            try {
+//                if (text[y] == 0xD1 | text[y] == 0xD4 | text[y] == 0xD5 | text[y] == 0xD6 | text[y] == 0xD7 | text[y] == 0xE7
+//                        | text[y] == 0xE8 | text[y] == 0xE9 | text[y] == 0xEA | text[y] == 0xEB | text[y] == 0xEC | text[y] == 0xD8 | text[y] == 0xD9
+//                        | text[y] == 0x80 | text[y] == 0x81 | text[y] == 0x82 | text[y] == 0x83 | text[y] == 0x84 | text[y] == 0x85 | text[y] == 0x86
+//                        | text[y] == 0x87 | text[y] == 0x88 | text[y] == 0x89 | text[y] == 0x8A | text[y] == 0x8B | text[y] == 0x8C | text[y] == 0x8E
+//                        | text[y] == 0x91 | text[y] == 0x92 | text[y] == 0x93 | text[y] == 0x94 | text[y] == 0x95 | text[y] == 0x96 | text[y] == 0x97
+//                        | text[y] == 0x98) {
+//
+//                    if ((text[y] == 0xD8 | text[y] == 0xD9)) {
+//                        data.write(text[y]);
+//                    } else data.write(0x20);
+//
+//                } else if (!(text[y + 1] == 0xD1 | text[y + 1] == 0xD4 | text[y + 1] == 0xD5 | text[y + 1] == 0xD6 | text[y + 1] == 0xD7 | text[y + 1] == 0xE7 | text[y + 1] == 0xE8 |
+//                        text[y + 1] == 0xE9 | text[y + 1] == 0xEA | text[y + 1] == 0xEB | text[y + 1] == 0xEC | text[y + 1] == 0xD8 | text[y + 1] == 0xD9)) {
+//                    data.write(0x20);
+//                }
+//            } catch (Exception e) {
+//                Log.w(TAG, "End fo char");
+//            }
+//        }
+//        spaceLine();
 
         checkLineconBuffer += 1;
     }//เก็บค่า Condiment เข้า ByteArrayOutputStream รอส่งพิมพ์
+
+    private int spicialAdd(char c, char c1) {
+        int result = 0;
+
+        try {
+
+            if (c == 0xD1 | c == 0xD4 | c == 0xD5 | c == 0xD6 | c == 0xD7 | c == 0xE7
+                    | c == 0xE8 | c == 0xE9 | c == 0xEA | c == 0xEB | c == 0xEC | c == 0xD8 | c == 0xD9
+                    | c == 0x80 | c == 0x81 | c == 0x82 | c == 0x83 | c == 0x84 | c == 0x85 | c == 0x86
+                    | c == 0x87 | c == 0x88 | c == 0x89 | c == 0x8A | c == 0x8B | c == 0x8C | c == 0x8E
+                    | c == 0x91 | c == 0x92 | c == 0x93 | c == 0x94 | c == 0x95 | c == 0x96 | c == 0x97
+                    | c == 0x98) {
+                //สระบนล่าง หาเจอแล้ว
+
+                if (c1 == 0xD1 | c1 == 0xD4 | c1 == 0xD5 | c1 == 0xD6 | c1 == 0xD7 | c1 == 0xE7
+                        | c1 == 0xE8 | c1 == 0xE9 | c1 == 0xEA | c1 == 0xEB | c1 == 0xEC | c1 == 0xD8 | c1 == 0xD9
+                        | c1 == 0x80 | c1 == 0x81 | c1 == 0x82 | c1 == 0x83 | c1 == 0x84 | c1 == 0x85 | c1 == 0x86
+                        | c1 == 0x87 | c1 == 0x88 | c1 == 0x89 | c1 == 0x8A | c1 == 0x8B | c1 == 0x8C | c1 == 0x8E
+                        | c1 == 0x91 | c1 == 0x92 | c1 == 0x93 | c1 == 0x94 | c1 == 0x95 | c1 == 0x96 | c1 == 0x97
+                        | c1 == 0x98) {
+                    //หน้าเป็นสระ และ หลังเป็นสระ
+                    result = 1;
+                } else {
+                    //หลังเป็นตัวอักษร
+
+                }
+
+            } else {
+                //ตัวอักษร
+                result = 0;
+
+            }
+
+
+        } catch (Exception e) {
+            Log.d("thai", "Error ==> " + e.toString());
+        }
+
+
+        return result;
+    }
+
+    private char thaiPaint(char c, char c1) {
+
+        char result = 0;
+
+        try {
+
+            if (c == 0xD1 | c == 0xD4 | c == 0xD5 | c == 0xD6 | c == 0xD7 | c == 0xE7
+                    | c == 0xE8 | c == 0xE9 | c == 0xEA | c == 0xEB | c == 0xEC | c == 0xD8 | c == 0xD9
+                    | c == 0x80 | c == 0x81 | c == 0x82 | c == 0x83 | c == 0x84 | c == 0x85 | c == 0x86
+                    | c == 0x87 | c == 0x88 | c == 0x89 | c == 0x8A | c == 0x8B | c == 0x8C | c == 0x8E
+                    | c == 0x91 | c == 0x92 | c == 0x93 | c == 0x94 | c == 0x95 | c == 0x96 | c == 0x97
+                    | c == 0x98) {
+                //สระบนล่าง หาเจอแล้ว
+
+                if (c1 == 0xD1 | c1 == 0xD4 | c1 == 0xD5 | c1 == 0xD6 | c1 == 0xD7 | c1 == 0xE7
+                        | c1 == 0xE8 | c1 == 0xE9 | c1 == 0xEA | c1 == 0xEB | c1 == 0xEC | c1 == 0xD8 | c1 == 0xD9
+                        | c1 == 0x80 | c1 == 0x81 | c1 == 0x82 | c1 == 0x83 | c1 == 0x84 | c1 == 0x85 | c1 == 0x86
+                        | c1 == 0x87 | c1 == 0x88 | c1 == 0x89 | c1 == 0x8A | c1 == 0x8B | c1 == 0x8C | c1 == 0x8E
+                        | c1 == 0x91 | c1 == 0x92 | c1 == 0x93 | c1 == 0x94 | c1 == 0x95 | c1 == 0x96 | c1 == 0x97
+                        | c1 == 0x98) {
+                    //หน้าเป็นสระ และ หลังเป็นสระ
+                    result = 0x81;
+                } else {
+                    //หลังเป็นตัวอักษร
+                    result = c;
+                }
+
+            } else {
+                //ตัวอักษร
+                result = 0x20;
+
+            }
+
+
+        } catch (Exception e) {
+            Log.d("thai", "Error ==> " + e.toString());
+        }
+
+
+        return result;
+    }
+
+    private char special(char c, char c1) {
+
+        char charResult = 0;
+
+        switch (c) {
+            case 0xD1:
+                switch (c1) {
+                    case 0xE8:
+                        charResult = 0x80;
+                        break;
+                    case 0xE9:
+                        charResult = 0x81;
+                        break;
+                    case 0xEA:
+                        charResult = 0x82;
+                        break;
+                    case 0xEB:
+                        charResult = 0x83;
+                        break;
+                }
+                break;
+            case 0xD4:
+                switch (c1) {
+                    case 0xE8:
+                        charResult = 0x84;
+                        break;
+                    case 0xE9:
+                        charResult = 0x85;
+                        break;
+                    case 0xEA:
+                        charResult = 0x86;
+                        break;
+                    case 0xEB:
+                        charResult = 0x87;
+                        break;
+                    case 0xEC:
+                        charResult = 0x88;
+                        break;
+
+                }
+                break;
+            case 0xD5:
+                switch (c1) {
+                    case 0xE8:
+                        charResult = 0x89;
+                        break;
+                    case 0xE9:
+                        charResult = 0x8A;
+                        break;
+                    case 0xEA:
+                        charResult = 0x8B;
+                        break;
+                    case 0xEB:
+                        charResult = 0x8C;
+                        break;
+                }
+                break;
+            case 0xD6:
+                switch (c1) {
+                    case 0xE8:
+                        charResult = 0x8D;
+                        break;
+                    case 0xE9:
+                        charResult = 0x8E;
+                        break;
+                    case 0xEA:
+                        charResult = 0x8F;
+                        break;
+                    case 0xEB:
+                        charResult = 0x90;
+                        break;
+                }
+                break;
+            case 0xD7:
+                switch (c1) {
+                    case 0xE8:
+                        charResult = 0x91;
+                        break;
+                    case 0xE9:
+                        charResult = 0x92;
+                        break;
+                    case 0xEA:
+                        charResult = 0x93;
+                        break;
+                    case 0xEB:
+                        charResult = 0x94;
+                        break;
+                }
+                break;
+        }
+
+        return charResult;
+    }
+
+
+    private boolean checkLower(char text) {
+        return text == 0xD8 | text == 0xD9;
+    }
 
     // คือการหา สระยน และ ล่าง ถ้ามี True
 
