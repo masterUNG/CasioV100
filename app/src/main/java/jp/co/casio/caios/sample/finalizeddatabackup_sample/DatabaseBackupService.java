@@ -613,15 +613,11 @@ public class DatabaseBackupService extends IntentService {
 
     private void consecBuffer(char[] text) {
 
-//        data.write(0x1D);
-//        data.write(0x21);
-//        data.write(0x10);
+
         for (int y = 0; y < text.length; y++) {
             data.write(text[y]);
         }   //for
-//        data.write(0x1D);
-//        data.write(0x21);
-//        data.write(0x00);
+
     }//เก็บค่า Consecnumber เข้า ByteArrayOutputStream รอส่งพิมพ
 
     private void qtyBuffer(char[] text) {
