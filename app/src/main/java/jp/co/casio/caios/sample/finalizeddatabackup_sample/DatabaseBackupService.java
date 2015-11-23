@@ -17,10 +17,9 @@ public class DatabaseBackupService extends IntentService {
     //My Explicit
     private String myQTY;
     private String myCONSECNUMBER, itemName, myUnitPrice, strITEMTYPE, myintFunc, myarrFunc;
-    private int intCount, countQty = 0, intStartCount = 0, intITEMNAMEcount, intConsecnumcount, checkLineconBuffer = 0,
+    private int intCount,countQty=0, intStartCount = 0, intITEMNAMEcount, intConsecnumcount,
     //*****------Point for Change Max Value ------*****
-    maxFontCon = 26,            //No comment
-            maxFontName = 30,           //จำนวน Character ของชื่อสินค้าหลัก
+    maxFontName = 30,           //จำนวน Character ของชื่อสินค้าหลัก
             lenghtChaCondiment = 25,    //จำนวน Character ของชื่อ Condiment
             maxCondiment = 6,           //จำนวน Condiment ต่อหนึ่ง Label
             condimentPerLine = 2;       //จำนวน Condiment ต่อหนึ่งบรรทัด
@@ -171,9 +170,6 @@ public class DatabaseBackupService extends IntentService {
 
         }   // for
 
-//        Log.w(myTAG3, "Count ที่ได้จาก CST005 ==> " + Integer.toString(count));
-//        Log.w(myTAG3, "จำนวน ITMENAME == " + Integer.toString(intITEMNAMEcount));
-
         cursor.moveToFirst();
 
         int countQty = 0;
@@ -210,7 +206,6 @@ public class DatabaseBackupService extends IntentService {
             myQTY = cursor.getString(intQTY);
             //arrayQTY[i] = myQTY ;
 
-            //Log.w(myTAG, "MyQTYForm cursor====> " + strItemName[i] + " = " + myQTY);
             //ได้ค่าของ UnitPrice ราคาสินค้า
             int intUNITPRICE = cursor.getColumnIndex("UNITPRICE");
             myUnitPrice = cursor.getString(intUNITPRICE);
@@ -249,7 +244,7 @@ public class DatabaseBackupService extends IntentService {
 
     }    // Method copySalseWork
 
-    private int[] forITEMTYPE(int[] arrayITEMTYPE) {
+    private int[] forITEMTYPE(int[] arrayITEMTYPE) {    //นับจำนวน ItemTpye ที่ != null
 
         int intTime = 0;
         for (int i = 0; i < arrayITEMTYPE.length; i++) {
@@ -271,12 +266,11 @@ public class DatabaseBackupService extends IntentService {
         }   // for
 
         return intResult;
-    }//นับจำนวน ItemTpye ที่ != null
+    }   //Method
 
-    private String[] forITEMNAMEstring(String[] itemnameStrings) {
+    private String[] forITEMNAMEstring(String[] itemnameStrings) {  //จัดเก็บ PLU โดยตัดค่า null ทิ้ง
 
         String TAG5 = "test1";
-        //   Log.w(TAG5, "ส่งเข้ามากี่ค่า ==> " + Integer.toString(itemnameStrings.length));
 
         int intTime = 0; // จำนวน Array ที่ไม่ม่ี Have Null
         for (int i = 0; i < itemnameStrings.length; i++) {
@@ -285,7 +279,6 @@ public class DatabaseBackupService extends IntentService {
                 intTime += 1;
             }   // if
         }   // for
-        //   Log.w(TAG5, "intTime ==> " + Integer.toString(intTime));        //***
         int intIndex = 0;
         String[] strResult = new String[intTime];
 
@@ -298,21 +291,21 @@ public class DatabaseBackupService extends IntentService {
 
         } //for
 
-        //   Log.w(TAG5, "ส่งค่าออก ==> " + Integer.toString(strResult.length));
         return strResult;
-    }//จัดเก็บ PLU โดยตัดค่า null ทิ้ง
 
-    private void spaceLine() {
+    }   //Method
+
+    private void spaceLine() {  //ขึ้นบรรทัดใหม่
         data.write(0x0d);
         data.write(0x0a);
-    }//ขึ้นบรรทัดใหม่
+    }   //Method
 
     @SuppressWarnings("serial")
     static final private HashMap<Character, Character>
 
             TIS620TBL = new HashMap<Character, Character>() {
         {
-
+            //put(¥u2212, (char) 0x2D);
             put((char) ' ', (char) 0x20);
             put((char) 0xA0, (char) 0x20);
             put((char) 'ก', (char) 0xA1);
@@ -405,18 +398,10 @@ public class DatabaseBackupService extends IntentService {
             put((char) '๘', (char) 0xF8);
             put((char) '๙', (char) 0xF9);
             //--------------------------
-
-
-
-
-
-
-
         }
     };
 
     private void forPrintLabelCondiment(String myCONSECNUMBER, String[] itemNameStrings, int intLoop, int[] arrayITEMTYPE, int[] itemQTY) {
-        //Log.w(TAG,"intLoop = "+intLoop+ " itemQTY = "+itemQTY);
         int ret = com.open(SerialCom.SERIAL_TYPE_COM2, 1, "localhost");
         if (ret == 0) {     // เชื่อมต่อสำเร็จ
             //------------------------------------------------------
@@ -444,13 +429,10 @@ public class DatabaseBackupService extends IntentService {
             //-----------------------Start Loop-----------------------
 
             for (int i = 0; i < intLoop; i++) {
-                Log.w(TAG, "intLoop = " + intLoop);
                 for (int y = 0; y < itemQTY[i] && arrayITEMTYPE[i] == 0; y++) {
 
                     initPrinter();
 
-                    //Log.w(TAG, "y = " + y + " itemQTY[" + i + "] = " + itemQTY[i]+" arrayITEMTYPE["+y+"] = "+arrayITEMTYPE[y]);
-                    //char[] charConsecNumber = ("#" + myCONSECNUMBER + "         (" + count + "/" + intMyLoop + ")").toCharArray();
                     countLoop += 1;
                     char[] charConsecNumber = ("#" + myCONSECNUMBER).toCharArray();
                     consecBuffer(charConsecNumber);
@@ -460,47 +442,42 @@ public class DatabaseBackupService extends IntentService {
 
                     //---------------------------------------------------------------------------------
 
-                    String toTIS620 = UTF8toTIS620(itemNameStrings[i]);
-//                    Log.w(TAG, "toTIS620 = " + toTIS620);
-                    char[] charItemNameStrings = toTIS620.toCharArray();
+                    String PLUtoTIS620 = UTF8toTIS620(itemNameStrings[i]);
+                    char[] charItemNameStrings;
+                    try {   //try เพราะ หากตัวอักษรน้อยกว่า .substring(0, maxFontName) จะเกิด Error
+                        charItemNameStrings = PLUtoTIS620.substring(0, maxFontName).toCharArray();
+                    } catch (Exception e) {
+                        charItemNameStrings = PLUtoTIS620.toCharArray();
+                    }
                     pluBuffer(charItemNameStrings);
                     spaceLine();
-//                  Log.w(TAG, "Name = " + itemNameStrings[i]);
 
                     int checkConQTY = 0;
                     char[] charItemCondiment;
-                    checkLineconBuffer = 0;
+
                     for (int k = 1; (i + k) < intLoop && (arrayITEMTYPE[i + k]) != 0 && checkConQTY < maxCondiment; k++) {
                         String ContoTIS620;
+                        //try เพราะ หากตัวอักษรน้อยกว่า .substring(0, maxFontName) จะเกิด Error
                         try {   //ตัดจำนวนตัวอักษร condiment
                             ContoTIS620 = UTF8toTIS620(itemNameStrings[i + k]).substring(0, lenghtChaCondiment);
                         } catch (Exception e) {
                             ContoTIS620 = UTF8toTIS620(itemNameStrings[i + k]);
                         }
                         if (k == 1) {
-                            charItemCondiment = (" " + ContoTIS620).toCharArray();
+                            charItemCondiment = ("  " + ContoTIS620).toCharArray();
                         } else {
-                            charItemCondiment = ("," + ContoTIS620).toCharArray();
+                            charItemCondiment = (",  " + ContoTIS620).toCharArray();
                         }
-
-                        //--------------------------------------------------------
-                        // ตัวส่งไปที่ conBuffer
-                        //--------------------------------------------------------
-
 
                         conBuffer(charItemCondiment);
-                        if (checkLineconBuffer % condimentPerLine == 0) {  //จำนวน Condiment ต่อหนึ่งบรรทัด
-                            spaceLine();
-                            //Log.w(TAG, "checkLineconBuffer = " + checkLineconBuffer);
-                        }
-                        //spaceLine();    //ขึ้ยบรรทัดใหม่
+
                         checkConQTY += 1;  //นับจำนวน Condiment
-                    }
-                    if (checkLineconBuffer % condimentPerLine != 0) {
-                        spaceLine();
-                    }
+                    }   //for
+
+//                    if (checkLineconBuffer % condimentPerLine != 0) {// ตัวสุดท้ายในกรณีหารไม่ลงตัว
+//                        spaceLine();
+//                    }
                     nextLabel();
-                    //Log.w(TAG, "loop[ " + (y + 1) + " ]");
 
                     byte[] out = data.toByteArray();
                     PrinterOut(out);
@@ -520,299 +497,199 @@ public class DatabaseBackupService extends IntentService {
         } else
             Log.w("print connect", "fail");
 
-    }
+    }   //Method
 
-
-    static public String UTF8toTIS620(String in) {
+    static public String UTF8toTIS620(String in) {  //แปลง Character เป็น Hex ไทย
         StringBuilder out = new StringBuilder(in);
         for (int i = 0; i < in.length(); i++) {
             char c = out.charAt(i);
-            //Log.w(TAG, "Char in ==> "+c);
-            //Character a = TIS620TBL.get(c);
-            Character a = (Character) TIS620TBL.get(Character.valueOf(c));
-            //Log.w(TAG, "Char out ==> " +a);
+            Character a = (Character)TIS620TBL.get(Character.valueOf(c));
             if (a != null) {
                 //out.setCharAt(i, a);
                 out.setCharAt(i, a.charValue());
             }
         }
-        //Log.w(TAG, "font out ==> " + out);
         return out.toString();
-    }
+    }   //Method
 
-    private void initPrinter() {
+    private void initPrinter() {    //เคลียร์ Buffer printer
         //----------------Clear buffer Printer--------------------
         byte ESC = 0x1B;                    //INIT Printer
         data = new ByteArrayOutputStream(); //INIT Printer
         data.write(0x1B);                   //INIT Printer
         data.write(0x40);                   //INIT Printer
         //--------------------------------------------------------
-    }//เคลียร์ Buffer printer
+    }   //Method
 
-    private void conBuffer(char[] text) {
+    private void conBuffer(char[] text) {   //เก็บค่า Condiment เข้า ByteArrayOutputStream รอส่งพิมพ์
+        boolean checkUpper = false;
+        boolean checkLower = false;
+        for (int i = 0; i < text.length; i++) {
+            if (checkUperChar(text[i])) {// สำหรับตรวจสอบว่าต้องพิมพ์สระบรรทัดบนหรือไม่
+                checkUpper = true;
+            }else if (checkLowerChar(text[i])) {// สำหรับตรวจสอบว่าต้องพิมพ์สระบรรทัดล่างหรือไม่
+                checkLower = true;
+            }   //if
+        }   //for
+//        Log.w(TAG, "checkUpper = " + checkUpper + " & checkLower = " + checkLower + " <==== conBuffer");
+        printing(text, checkUpper, checkLower);
 
+        spaceLine();
+
+    }   //Method
+
+    private void printing(char[] text, boolean checkUpper, boolean checkLower) {    //ตรวจสอบสระบนล่างและพยัญชนะ
         //--------------------------------------------------------
-        //บรรทัด 1 นี่คือ สระบน ตัวเดี่ยว
+        //บรรทัด 1 นี่คือ สระบน
         //--------------------------------------------------------
+        if (checkUpper){
+            for (int z = 0; z < text.length; z++) {
+                int check = 0;
+                try {
+                    if (checkUperChar(text[z + 1])) {          //  สระบนแรก
+                        if (checkUperChar(text[z + 2])) {      //  สระบนสอง
+                            endCoding(text[z + 1], text[z + 2]);
+                            z += 2;
+                            check = 1;
+                        }
+                        if (!checkUperChar(text[z + 2]) & check == 0) {
+                            data.write(text[z + 1]);  // พิ่มพ์ได้เลย
+                            z += 1;
+                        }
+                    } else if (checkLowerChar(text[z + 1])) {    //  สระล่างแรก
+                        if (checkUperChar(text[z + 2])) {
+                            data.write(text[z + 2]);  // พิ่มพ์ได้เลย
+                            z += 2;
+                        }
+                    } else data.write(0x20);   // เขียนช่องว่าง
+                } catch (Exception e) {
+//                    Log.w(TAG, "End of char");
+                }
+            }   //for
+            spaceLine();
+        }   //if
 
-
-        int j = 0;
-        for (int y = 0; y < text.length && y < maxFontCon; y++) {
-
-            // หาสระบน และ ล่างก่อน
+        //บรรทัด 2
+        for (int y = 0; y < text.length; y++) {
             try {
-
-                data.write(thaiPaint(text[y+1], text[y + 2]));
-               y = y + spicialAdd(text[y], text[y + 1]);
-
+                if (!(checkUperChar(text[y]) | checkLowerChar(text[y]))) {
+                    data.write(text[y]);
+                }
             } catch (Exception e) {
-                Log.w(TAG, "End fo char");
-            }
+//                Log.w(TAG, "End of char");
+            }   //try catch
         }   //for
-        spaceLine();
 
+        if(checkLower){
+            spaceLine();
 
+            //บรรทัด 3
+            for (int y = 0; y < text.length; y++) {
 
+                try {
+                    if (checkLowerChar(text[y + 1])) {      //สระล่าง
+                        data.write(text[y + 1]);
+                        if (checkUperChar(text[y + 2])) {
+                            y += 2;
+                        } else y += 1;
+                    } else if (!(checkLowerChar(text[y + 1]) | checkUperChar(text[y + 1]))) {
+                        data.write(0x20);
+                    }
+                } catch (Exception e) {
+//                    Log.w(TAG, "End of char");
+                }   //try catch
+            }   //for
+        }   //if
+    }   //Method
 
-        //--------------------------------------------------------
-        //บรรทัด 2  นี่คือ อักษรกลาง
-        //--------------------------------------------------------
-
-        for (int y = 0; y < text.length && y < maxFontCon; y++) {
-            if (text[y] == 0xD1 | text[y] == 0xD4 | text[y] == 0xD5 | text[y] == 0xD6 | text[y] == 0xD7 |
-                    text[y] == 0xE7 | text[y] == 0xE8 | text[y] == 0xE9 | text[y] == 0xEA | text[y] == 0xEB | text[y] == 0xEC |
-                    text[y] == 0xD8 | text[y] == 0xD9) {    // ไม่ทำอะไร
-
-            } else data.write(text[y]);
-        }   //for
-        spaceLine();
-
-
-        //--------------------------------------------------------
-        //บรรทัด 3  นี่คือ สระล่าง
-        //--------------------------------------------------------
-
-//        for (int y = 0; y < text.length && y < maxFontCon; y++) {
-//            try {
-//                if (text[y] == 0xD1 | text[y] == 0xD4 | text[y] == 0xD5 | text[y] == 0xD6 | text[y] == 0xD7 | text[y] == 0xE7
-//                        | text[y] == 0xE8 | text[y] == 0xE9 | text[y] == 0xEA | text[y] == 0xEB | text[y] == 0xEC | text[y] == 0xD8 | text[y] == 0xD9
-//                        | text[y] == 0x80 | text[y] == 0x81 | text[y] == 0x82 | text[y] == 0x83 | text[y] == 0x84 | text[y] == 0x85 | text[y] == 0x86
-//                        | text[y] == 0x87 | text[y] == 0x88 | text[y] == 0x89 | text[y] == 0x8A | text[y] == 0x8B | text[y] == 0x8C | text[y] == 0x8E
-//                        | text[y] == 0x91 | text[y] == 0x92 | text[y] == 0x93 | text[y] == 0x94 | text[y] == 0x95 | text[y] == 0x96 | text[y] == 0x97
-//                        | text[y] == 0x98) {
-//
-//                    if ((text[y] == 0xD8 | text[y] == 0xD9)) {
-//                        data.write(text[y]);
-//                    } else data.write(0x20);
-//
-//                } else if (!(text[y + 1] == 0xD1 | text[y + 1] == 0xD4 | text[y + 1] == 0xD5 | text[y + 1] == 0xD6 | text[y + 1] == 0xD7 | text[y + 1] == 0xE7 | text[y + 1] == 0xE8 |
-//                        text[y + 1] == 0xE9 | text[y + 1] == 0xEA | text[y + 1] == 0xEB | text[y + 1] == 0xEC | text[y + 1] == 0xD8 | text[y + 1] == 0xD9)) {
-//                    data.write(0x20);
-//                }
-//            } catch (Exception e) {
-//                Log.w(TAG, "End fo char");
-//            }
-//        }
-//        spaceLine();
-
-        checkLineconBuffer += 1;
-    }//เก็บค่า Condiment เข้า ByteArrayOutputStream รอส่งพิมพ์
-
-    private int spicialAdd(char c, char c1) {
-        int result = 0;
-
-        try {
-
-            if (c == 0xD1 | c == 0xD4 | c == 0xD5 | c == 0xD6 | c == 0xD7 | c == 0xE7
-                    | c == 0xE8 | c == 0xE9 | c == 0xEA | c == 0xEB | c == 0xEC | c == 0xD8 | c == 0xD9
-                    | c == 0x80 | c == 0x81 | c == 0x82 | c == 0x83 | c == 0x84 | c == 0x85 | c == 0x86
-                    | c == 0x87 | c == 0x88 | c == 0x89 | c == 0x8A | c == 0x8B | c == 0x8C | c == 0x8E
-                    | c == 0x91 | c == 0x92 | c == 0x93 | c == 0x94 | c == 0x95 | c == 0x96 | c == 0x97
-                    | c == 0x98) {
-                //สระบนล่าง หาเจอแล้ว
-
-                if (c1 == 0xD1 | c1 == 0xD4 | c1 == 0xD5 | c1 == 0xD6 | c1 == 0xD7 | c1 == 0xE7
-                        | c1 == 0xE8 | c1 == 0xE9 | c1 == 0xEA | c1 == 0xEB | c1 == 0xEC | c1 == 0xD8 | c1 == 0xD9
-                        | c1 == 0x80 | c1 == 0x81 | c1 == 0x82 | c1 == 0x83 | c1 == 0x84 | c1 == 0x85 | c1 == 0x86
-                        | c1 == 0x87 | c1 == 0x88 | c1 == 0x89 | c1 == 0x8A | c1 == 0x8B | c1 == 0x8C | c1 == 0x8E
-                        | c1 == 0x91 | c1 == 0x92 | c1 == 0x93 | c1 == 0x94 | c1 == 0x95 | c1 == 0x96 | c1 == 0x97
-                        | c1 == 0x98) {
-                    //หน้าเป็นสระ และ หลังเป็นสระ
-                    result = 1;
-                } else {
-                    //หลังเป็นตัวอักษร
-
-                }
-
-            } else {
-                //ตัวอักษร
-                result = 0;
-
-            }
-
-
-        } catch (Exception e) {
-            Log.d("thai", "Error ==> " + e.toString());
-        }
-
-
-        return result;
-    }
-
-    private char thaiPaint(char c, char c1) {
-
-        char result = 0;
-
-        try {
-
-            if (c == 0xD1 | c == 0xD4 | c == 0xD5 | c == 0xD6 | c == 0xD7 | c == 0xE7
-                    | c == 0xE8 | c == 0xE9 | c == 0xEA | c == 0xEB | c == 0xEC | c == 0xD8 | c == 0xD9
-                    | c == 0x80 | c == 0x81 | c == 0x82 | c == 0x83 | c == 0x84 | c == 0x85 | c == 0x86
-                    | c == 0x87 | c == 0x88 | c == 0x89 | c == 0x8A | c == 0x8B | c == 0x8C | c == 0x8E
-                    | c == 0x91 | c == 0x92 | c == 0x93 | c == 0x94 | c == 0x95 | c == 0x96 | c == 0x97
-                    | c == 0x98) {
-                //สระบนล่าง หาเจอแล้ว
-
-                if (c1 == 0xD1 | c1 == 0xD4 | c1 == 0xD5 | c1 == 0xD6 | c1 == 0xD7 | c1 == 0xE7
-                        | c1 == 0xE8 | c1 == 0xE9 | c1 == 0xEA | c1 == 0xEB | c1 == 0xEC | c1 == 0xD8 | c1 == 0xD9
-                        | c1 == 0x80 | c1 == 0x81 | c1 == 0x82 | c1 == 0x83 | c1 == 0x84 | c1 == 0x85 | c1 == 0x86
-                        | c1 == 0x87 | c1 == 0x88 | c1 == 0x89 | c1 == 0x8A | c1 == 0x8B | c1 == 0x8C | c1 == 0x8E
-                        | c1 == 0x91 | c1 == 0x92 | c1 == 0x93 | c1 == 0x94 | c1 == 0x95 | c1 == 0x96 | c1 == 0x97
-                        | c1 == 0x98) {
-                    //หน้าเป็นสระ และ หลังเป็นสระ
-                    result = 0x81;
-                } else {
-                    //หลังเป็นตัวอักษร
-                    result = c;
-                }
-
-            } else {
-                //ตัวอักษร
-                result = 0x20;
-
-            }
-
-
-        } catch (Exception e) {
-            Log.d("thai", "Error ==> " + e.toString());
-        }
-
-
-        return result;
-    }
-
-    private char special(char c, char c1) {
-
-        char charResult = 0;
-
-        switch (c) {
-            case 0xD1:
-                switch (c1) {
-                    case 0xE8:
-                        charResult = 0x80;
+    private void endCoding(char x1,char x2) {   //แปลง สระบนกรณีสระสองชั้นเป็นสระคู่
+        switch (x1) {
+            case 0xD1:  //case"ั"
+                switch (x2) {
+                    case 0xE8: data.write(0x80);    //case"่"
                         break;
-                    case 0xE9:
-                        charResult = 0x81;
+                    case 0xE9:data.write(0x81);     //case"้"
                         break;
-                    case 0xEA:
-                        charResult = 0x82;
+                    case 0xEA:data.write(0x82);     //case'๊'
                         break;
-                    case 0xEB:
-                        charResult = 0x83;
+                    case 0xEB:data.write(0x83);     //case"๋"
                         break;
                 }
                 break;
-            case 0xD4:
-                switch (c1) {
-                    case 0xE8:
-                        charResult = 0x84;
+            case 0xD4:  //case"ิ"
+                switch (x2) {
+                    case 0xE8:data.write(0x84);     //case"่"
                         break;
-                    case 0xE9:
-                        charResult = 0x85;
+                    case 0xE9:data.write(0x85);     //case"้"
                         break;
-                    case 0xEA:
-                        charResult = 0x86;
+                    case 0xEA:data.write(0x86);     //case'๊'
                         break;
-                    case 0xEB:
-                        charResult = 0x87;
+                    case 0xEB:data.write(0x87);     //case"๋""
                         break;
-                    case 0xEC:
-                        charResult = 0x88;
-                        break;
-
-                }
-                break;
-            case 0xD5:
-                switch (c1) {
-                    case 0xE8:
-                        charResult = 0x89;
-                        break;
-                    case 0xE9:
-                        charResult = 0x8A;
-                        break;
-                    case 0xEA:
-                        charResult = 0x8B;
-                        break;
-                    case 0xEB:
-                        charResult = 0x8C;
+                    case 0xEC:data.write(0x88);     //case"์"
                         break;
                 }
                 break;
-            case 0xD6:
-                switch (c1) {
-                    case 0xE8:
-                        charResult = 0x8D;
+            case 0xD5:  //case"ี"
+                switch (x2) {
+                    case 0xE8:data.write(0x89);    //case"่"
                         break;
-                    case 0xE9:
-                        charResult = 0x8E;
+                    case 0xE9:data.write(0x8A);     //case"้"
                         break;
-                    case 0xEA:
-                        charResult = 0x8F;
+                    case 0xEA:data.write(0x8B);     //case'๊'
                         break;
-                    case 0xEB:
-                        charResult = 0x90;
+                    case 0xEB:data.write(0x8C);     //case"๋""
                         break;
                 }
                 break;
-            case 0xD7:
-                switch (c1) {
-                    case 0xE8:
-                        charResult = 0x91;
+            case 0xD6:  //case"ึ"
+                switch (x2) {
+                    case 0xE8:data.write(0x8D);    //case"่"
                         break;
-                    case 0xE9:
-                        charResult = 0x92;
+                    case 0xE9:data.write(0x8E);     //case"้"
                         break;
-                    case 0xEA:
-                        charResult = 0x93;
+                    case 0xEA:data.write(0x8F);     //case'๊'
                         break;
-                    case 0xEB:
-                        charResult = 0x94;
+                    case 0xEB:data.write(0x90);     //case"๋""
                         break;
                 }
                 break;
-        }
+            case 0xD7:  //case"ื"
+                switch (x2) {
+                    case 0xE8:data.write(0x81);    //case"่"
+                        break;
+                    case 0xE9:data.write(0x82);     //case"้"
+                        break;
+                    case 0xEA:data.write(0x83);     //case'๊'
+                        break;
+                    case 0xEB:data.write(0x84);     //case"๋""
+                        break;
+                }
+                break;
+        }   //Switch
 
-        return charResult;
-    }
+    }   //Method
 
+    private boolean checkLowerChar(char text) { //คือการหา สระล่าง ถ้ามี True
+        if (text == 0xD8 | text == 0xD9) {
+            return true;
+        }else return false;
+    }   //Method
 
-    private boolean checkLower(char text) {
-        return text == 0xD8 | text == 0xD9;
-    }
-
-    // คือการหา สระยน และ ล่าง ถ้ามี True
-
-    private boolean checkUper(char text) {
-        return text == 0xD1 | text == 0xD4 | text == 0xD5 | text == 0xD6 | text == 0xD7 | text == 0xE7
-                | text == 0xE8 | text == 0xE9 | text == 0xEA | text == 0xEB | text == 0xEC | text == 0xD8 | text == 0xD9
+    private boolean checkUperChar(char text) {// คือการหา สระบน ถ้ามี True
+        if (text == 0xD1 | text == 0xD4 | text == 0xD5 | text == 0xD6 | text == 0xD7 | text == 0xE7
+                | text == 0xE8 | text == 0xE9 | text == 0xEA | text == 0xEB | text == 0xEC
                 | text == 0x80 | text == 0x81 | text == 0x82 | text == 0x83 | text == 0x84 | text == 0x85 | text == 0x86
                 | text == 0x87 | text == 0x88 | text == 0x89 | text == 0x8A | text == 0x8B | text == 0x8C | text == 0x8E
                 | text == 0x91 | text == 0x92 | text == 0x93 | text == 0x94 | text == 0x95 | text == 0x96 | text == 0x97
-                | text == 0x98;
-    }
+                | text == 0x98) {
+            return true;
+        }else return false;
+
+    }   //Method
 
 
-    private void nextLabel() {
+    private void nextLabel() {  //ขึ้น label ใหม่
         data.write(0x1C);
         data.write(0x28);
         data.write(0x4C);
@@ -820,43 +697,55 @@ public class DatabaseBackupService extends IntentService {
         data.write(0x00);
         data.write(0x41);
         data.write(0x30);
-    }//ขึ้น label ใหม่
+    }   //Method
 
-    private void consecBuffer(char[] text) {
-
+    private void consecBuffer(char[] text) {    //เก็บค่า Consecnumber เข้า ByteArrayOutputStream รอส่งพิมพื
 
         for (int y = 0; y < text.length; y++) {
             data.write(text[y]);
         }   //for
 
-    }//เก็บค่า Consecnumber เข้า ByteArrayOutputStream รอส่งพิมพ
+    }   //Method
 
-    private void qtyBuffer(char[] text) {
+    private void qtyBuffer(char[] text) {   //เก็บค่าเลขกำกับ Labal เข้า ByteArrayOutputStream รอส่งพิมพ์
+
         for (int y = 0; y < text.length; y++) {
             data.write(text[y]);
         }   //for
         spaceLine();
-    }//เก็บค่าเลขกำกับ Labal เข้า ByteArrayOutputStream รอส่งพิมพ
 
-    private void pluBuffer(char[] text) {
-        for (int y = 0; y < text.length && y < maxFontName; y++) {
-            data.write(text[y]);
-        }   //for
-    }//เก็บค่า PLU เข้า ByteArrayOutputStream รอส่งพิมพ
+    }   //Method
 
-    private void PrinterOut(byte[] out) {
+    private void pluBuffer(char[] text) {   //เก็บค่า PLU เข้า ByteArrayOutputStream รอส่งพิมพ์
+
+        boolean checkUpper = false;
+        boolean checkLower = false;
+        for (int i = 0; i < text.length; i++) {
+            if (checkUperChar(text[i])) {
+                checkUpper = true;
+            }else if (checkLowerChar(text[i])) {
+                checkLower = true;
+            }
+
+        }
+//        Log.w(TAG, "checkUpper = " + checkUpper + " & checkLower = " + checkLower + " <==== pluBuffer");
+        printing(text,checkUpper,checkLower);
+
+    }   //Method
+
+    private void PrinterOut(byte[] out) {   //สั่งพิมพ์
         com.writeData(out, out.length);
-    }//สั่งพิมพ์
+    }   //method
 
-    private int checkTypePLU(int[] arrayITEMTYPE) {
+    private int checkTypePLU(int[] arrayITEMTYPE) { //ตรวจนับจำนวนสินค้าหลัก
         int resultQTY = 0;
         for (int i = 0; i < arrayITEMTYPE.length; i++) {
             if (arrayITEMTYPE[i] == 0) {
-                resultQTY += 1;
+                resultQTY+=1;
             }
-        }
+        }   //for
 
         return resultQTY;
-    }//ตรวจนับจำนวนสินค้าหลัก
+    }//method
 
-}    // Main
+}    // Class Main
